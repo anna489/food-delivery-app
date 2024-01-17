@@ -1,5 +1,8 @@
 import "./globals.css";
+
 import { ThemeProvider } from "@/theme";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 export default function RootLayout({
   children,
@@ -8,8 +11,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <ThemeProvider>{children}</ThemeProvider>
+      <body
+        style={{
+          height: "auto",
+          maxWidth: "full",
+        }}
+      >
+        <ThemeProvider>
+          <Nav />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
