@@ -1,18 +1,9 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
-import {
-  Stack,
-  Box,
-  Container,
-  Item,
-  Typography,
-  Link,
-  Grid,
-} from "@mui/material";
+import { Stack, Container, Typography, Link } from "@mui/material";
 import PineconeLogoWhite from "../../../public/images/PineconeLogoWhite";
-// import FooterImage from "../../../public/images/Footer/FooterImage";
+
 import FacebookSharpIcon from "@mui/icons-material/FacebookSharp";
 import { Instagram } from "@mui/icons-material";
 import { Twitter } from "@mui/icons-material";
@@ -20,7 +11,6 @@ import { Twitter } from "@mui/icons-material";
 const Footer = () => {
   return (
     <Stack
-      // width={"100vw"}
       sx={{
         background: "#18BA51",
         justifyContent: "center",
@@ -30,7 +20,6 @@ const Footer = () => {
         backgroundImage: 'url("images/footerImage.svg")',
       }}
     >
-      {/* <Image alt="" src="/images/footerImage.svg" fill="true" /> */}
       <Container
         sx={{
           justifyContent: "center",

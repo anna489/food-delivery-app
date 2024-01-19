@@ -51,7 +51,6 @@ const Card = () => {
               top: 8,
               color: "white",
               fontWeight: 700,
-
               borderRadius: "20px",
               fontSize: "20px",
             }}

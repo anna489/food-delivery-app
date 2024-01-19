@@ -1,13 +1,22 @@
 import * as React from "react";
 import Card from "@/components/Card";
-import CardModal from "@/components/CardModal";
+import RightDrawer from "@/components/RightDrawer";
+import CardModals from "@/components/CardModals";
 
 export default function Home() {
   return (
-    <main style={{}}>
+    <main style={{ margin: "50px" }}>
       <Card />
-      <CardModal />
-      {/* <RightDrawer /> */}
+      <CardModals />
+      <RightDrawer />
+      {/* <div className="wrapper">
+        <div>
+          <h1>hi</h1>
+        </div>
+        <div>
+          <h1>hello</h1>
+        </div>
+      </div> */}
     </main>
   );
 }

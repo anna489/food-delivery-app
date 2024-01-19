@@ -4,25 +4,27 @@ import * as React from "react";
 import { Grid, Stack, TextField, Box, Container, Link } from "@mui/material";
 import PineconeLogo from "../../../public/images/PineconeLogoBlack";
 import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import SearchIcon from "@mui/icons-material/Search";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
+import RightDrawer from "@/components/RightDrawer";
+import BottomNavigationAction from "@mui/material";
 
-const Nav = () => {
+type Props = {};
+
+export default function Nav(props: Props) {
   const [value, setValue] = React.useState("recents");
 
   return (
     <main>
-      <Box
+      <Grid
         container
         spacing={2}
         sx={{
           flexGrow: 2,
           display: "flex",
           justifyContent: "space-around",
+          marginTop: "20px",
         }}
-        mt={2}
       >
         <Grid>
           <BottomNavigation
@@ -85,9 +87,10 @@ const Nav = () => {
               gap: "10px",
             }}
           >
-            <ShoppingBasketOutlinedIcon sx={{}} />
+            <ShoppingBasketOutlinedIcon />
             Сагс
           </Link>
+          {/* <b */}
           {/* startIcon={<SearchIcon />} */}
           <Link
             color="secondary"
@@ -105,9 +108,7 @@ const Nav = () => {
             Нэвтрэх
           </Link>
         </Grid>
-      </Box>
+      </Grid>
     </main>
   );
-};
-
-export default Nav;
+}
