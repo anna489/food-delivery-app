@@ -1,16 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Grid,
-  Button,
-  Typography,
-  Stack,
-  TextField,
-  Input,
-  Box,
-  Container,
-} from "@mui/material";
+import { Grid, Stack, TextField, Box, Container, Link } from "@mui/material";
 import PineconeLogo from "../../../public/images/PineconeLogoBlack";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -36,32 +27,45 @@ const Nav = () => {
         <Grid>
           <BottomNavigation
             showLabels
-            sx={{ width: 500, alignItems: "center", display: "flex" }}
+            sx={{
+              width: 600,
+              alignItems: "center",
+              display: "flex",
+              gap: "70px",
+              justifyContent: "center",
+            }}
             value={value}
             onChange={(event, newValue) => {
               setValue(newValue);
             }}
           >
             <PineconeLogo />
-            <BottomNavigationAction
-              label="Нүүр"
-              sx={{ fontWeight: 900 }}
-              color="secondary"
-            />
-            <BottomNavigationAction
-              label="Хоолны цэс"
-              sx={{ fontWeight: 900 }}
-            />
-            <BottomNavigationAction
-              label="Хүргэлтийн бүс"
-              sx={{ fontWeight: 900 }}
-            />
+            <Link
+              href="#"
+              underline="none"
+              sx={{ fontWeight: 900, fontSize: "20px" }}
+            >
+              {"Нүүр"}
+            </Link>
+            <Link
+              href="#"
+              underline="none"
+              sx={{ fontWeight: 900, fontSize: "20px" }}
+            >
+              {"Хоолны цэс"}
+            </Link>
+            <Link
+              href="#"
+              underline="none"
+              sx={{ fontWeight: 900, fontSize: "20px" }}
+            >
+              {"Хүргэлтийн бүс"}
+            </Link>
           </BottomNavigation>
         </Grid>
         <Grid
           sx={{
             display: "flex",
-            // justifyContent: "space-between",
             alignItems: "center",
             gap: 10,
           }}
@@ -69,15 +73,37 @@ const Nav = () => {
           <Stack sx={{ alignItems: "center", display: "flex", border: "10px" }}>
             <TextField label="Хайх" size="small" />
           </Stack>
-          <Button color="secondary">
+          <Link
+            color="secondary"
+            href="#"
+            underline="none"
+            sx={{
+              fontWeight: 900,
+              fontSize: "20px",
+              alignItems: "center",
+              display: "flex",
+              gap: "10px",
+            }}
+          >
             <ShoppingBasketOutlinedIcon sx={{}} />
             Сагс
-          </Button>
+          </Link>
           {/* startIcon={<SearchIcon />} */}
-          <Button color="secondary" sx={{ gap: "2px" }}>
+          <Link
+            color="secondary"
+            href="#"
+            underline="none"
+            sx={{
+              fontWeight: 900,
+              fontSize: "20px",
+              alignItems: "center",
+              display: "flex",
+              gap: "10px",
+            }}
+          >
             <PersonOutlineOutlinedIcon sx={{}} />
             Нэвтрэх
-          </Button>
+          </Link>
         </Grid>
       </Box>
     </main>

@@ -7,7 +7,7 @@ const Card = () => {
     <Box
       sx={{
         // height: "400px",
-        width: "300px",
+        width: "400px",
         border: "2px",
         borderColor: "black",
       }}
