@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Box,
@@ -10,9 +12,20 @@ import {
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
 
+import { useRouter } from "next/navigation";
+
 type Props = {};
 
 const LoginPage = (props: Props) => {
+  const router = useRouter();
+  const handleSignUpClick = () => {
+    router.push("/signup");
+  };
+
+  const handleStepOneClick = () => {
+    router.push("/passrestore/stepone");
+  };
+
   return (
     <div>
       <Container sx={{ padding: "100px" }}>
@@ -67,26 +80,29 @@ const LoginPage = (props: Props) => {
             }}
           />
 
-          <Typography
+          <Button
             sx={{
-              fontWeight: 500,
+              fontWeight: 400,
               display: "flex",
               justifyContent: "end",
-              margin: "5px",
+              color: "black",
+              fontSize: "12px",
             }}
+            onClick={handleStepOneClick}
           >
             Нууц үг сэргээх
-          </Typography>
+          </Button>
         </Stack>
         <Stack>
           <Button
             sx={{
               borderRadius: "4px",
-              bgcolor: "#EEEFF2",
-              color: "#1C20243D",
-              marginTop: "20px",
+              bgcolor: "#18BA51",
+              color: "white",
+              marginTop: "40px",
               padding: "15px",
             }}
+            variant="outlined"
           >
             Нэвтрэх
           </Button>
@@ -107,11 +123,12 @@ const LoginPage = (props: Props) => {
           <Button
             sx={{
               borderRadius: "4px",
-              borderColor: "#18BA51",
               color: "black",
-              bgcolor: "#18BA51",
               padding: "15px",
+              bgcolor: "white",
             }}
+            variant="outlined"
+            onClick={handleSignUpClick}
           >
             Бүртгүүлэх
           </Button>

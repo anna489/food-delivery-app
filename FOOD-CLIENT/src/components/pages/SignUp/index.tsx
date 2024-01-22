@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Box,
@@ -10,10 +12,15 @@ import {
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
 import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
 const SignUpPage = (props: Props) => {
+  const router = useRouter();
+  const handleLoginClick = () => {
+    router.push("/login");
+  };
   return (
     <div>
       <Container sx={{ padding: "100px" }}>
@@ -140,13 +147,40 @@ const SignUpPage = (props: Props) => {
           <Button
             sx={{
               borderRadius: "4px",
-              bgcolor: "#EEEFF2",
-              color: "#1C20243D",
+              bgcolor: "#18BA51",
+              color: "white",
               marginTop: "20px",
               padding: "15px",
             }}
+            variant="outlined"
           >
             Бүртгүүлэх
+          </Button>
+        </Stack>
+        <Typography
+          sx={{
+            fontSize: "18px",
+            fontWeight: 400,
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+            padding: "40px",
+          }}
+        >
+          Эсвэл
+        </Typography>
+        <Stack>
+          <Button
+            sx={{
+              borderRadius: "4px",
+              color: "black",
+              padding: "15px",
+              bgcolor: "white",
+            }}
+            variant="outlined"
+            onClick={handleLoginClick}
+          >
+            Нэвтрэх
           </Button>
         </Stack>
       </Container>

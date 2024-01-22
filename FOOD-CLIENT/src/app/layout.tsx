@@ -1,7 +1,7 @@
 import "./globals.scss";
 
 import { ThemeProvider } from "@/theme";
-import Nav from "@/components/Nav";
+import Nav from "@/components/Header";
 import Footer from "../components/Footer";
 
 export default function RootLayout({

@@ -1,16 +1,122 @@
+"use client";
 import * as React from "react";
-import LoginPage from "@/components/pages/Login";
-import SignUpPage from "@/components/pages/SignUp";
+import { Stack, Typography, Box, Container } from "@mui/material";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import RiceBowlIcon from "@mui/icons-material/RiceBowl";
+
 export default function Home() {
+  const cards = [
+    {
+      icon: <ImportContactsIcon />,
+      name: "Хүргэлтийн төлөв хянах",
+      description: "Захиалга бэлтгэлийн явцыг хянах",
+    },
+    {
+      icon: <AccessTimeIcon />,
+      name: "Шуурхай хүргэлт",
+      description: "Захиалга бэлтгэлийн явцыг хянах",
+    },
+    {
+      icon: <RiceBowlIcon />,
+      name: "Эрүүл, баталгаат орц",
+      description: "Захиалга бэлтгэлийн явцыг хянах",
+    },
+    {
+      icon: <ImportContactsIcon />,
+      name: "Хоолны өргөн сонголт",
+      description: "Захиалга бэлтгэлийн явцыг хянах",
+    },
+  ];
+
   return (
-    <main
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <SignUpPage />
+    <main>
+      <Box
+        sx={{
+          background: "#18BA51",
+          gap: "300px",
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+          height: "500px",
+          backgroundImage: 'url("images/footerImage.svg")',
+          padding: "300px",
+        }}
+      >
+        <Stack>
+          <Typography
+            sx={{
+              fontWeight: 900,
+              color: "white",
+              fontSize: "60px",
+            }}
+          >
+            Pinecone Food delivery
+          </Typography>
+          <Container
+            sx={{
+              backgroundColor: "white",
+              width: "full",
+              height: "1px ",
+              marginTop: 10,
+            }}
+          ></Container>
+          <Typography
+            sx={{
+              fontWeight: 900,
+              color: "white",
+              fontSize: "22px",
+            }}
+          >
+            Horem ipsum dolor sit amet, consectetur adipiscing elit.
+          </Typography>
+        </Stack>
+        <Stack>
+          <img src="./images/circleFood.png" alt="" />
+        </Stack>
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "150px",
+        }}
+      >
+        {cards.map((card) => {
+          return (
+            <Box
+              sx={{
+                height: "200px",
+                width: "300px",
+              }}
+            >
+              <Stack
+                sx={{
+                  display: "flex",
+                }}
+              >
+                <Stack
+                  sx={{
+                    color: "#18BA51",
+                    padding: "30px",
+                  }}
+                >
+                  {card.icon}
+                </Stack>
+                <Stack
+                  sx={{ border: "2px", fontSize: "20px", fontWeight: 600 }}
+                >
+                  {card.name}
+                </Stack>
+                <Stack sx={{ border: "2px", color: "#272727" }}>
+                  {card.description}
+                </Stack>
+              </Stack>
+            </Box>
+          );
+        })}
+      </Box>
     </main>
   );
 }

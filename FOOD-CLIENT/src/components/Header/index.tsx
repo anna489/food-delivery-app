@@ -1,13 +1,20 @@
 "use client";
 
 import * as React from "react";
-import { Grid, Stack, TextField, Box, Container, Link } from "@mui/material";
+import {
+  Grid,
+  Stack,
+  TextField,
+  Box,
+  Container,
+  Link,
+  Button,
+} from "@mui/material";
 import PineconeLogo from "../../../public/images/PineconeLogoBlack";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import RightDrawer from "@/components/RightDrawer";
-import BottomNavigationAction from "@mui/material";
 
 type Props = {};
 
@@ -43,21 +50,21 @@ export default function Nav(props: Props) {
           >
             <PineconeLogo />
             <Link
-              href="#"
+              href="/"
               underline="none"
               sx={{ fontWeight: 900, fontSize: "20px" }}
             >
               {"Нүүр"}
             </Link>
             <Link
-              href="#"
+              href="/foodmenu"
               underline="none"
               sx={{ fontWeight: 900, fontSize: "20px" }}
             >
               {"Хоолны цэс"}
             </Link>
             <Link
-              href="#"
+              href="deliveryregion"
               underline="none"
               sx={{ fontWeight: 900, fontSize: "20px" }}
             >
@@ -75,13 +82,10 @@ export default function Nav(props: Props) {
           <Stack sx={{ alignItems: "center", display: "flex", border: "10px" }}>
             <TextField label="Хайх" size="small" />
           </Stack>
-          <Link
-            color="secondary"
-            href="#"
-            underline="none"
+          <Button
             sx={{
               fontWeight: 900,
-              fontSize: "20px",
+              fontSize: "19px",
               alignItems: "center",
               display: "flex",
               gap: "10px",
@@ -89,12 +93,11 @@ export default function Nav(props: Props) {
           >
             <ShoppingBasketOutlinedIcon />
             Сагс
-          </Link>
-          {/* <b */}
-          {/* startIcon={<SearchIcon />} */}
+          </Button>
+          {/* <RightDrawer /> */}
           <Link
             color="secondary"
-            href="#"
+            href="userlogin"
             underline="none"
             sx={{
               fontWeight: 900,
@@ -105,7 +108,7 @@ export default function Nav(props: Props) {
             }}
           >
             <PersonOutlineOutlinedIcon sx={{}} />
-            Нэвтрэх
+            НЭВТРЭХ
           </Link>
         </Grid>
       </Grid>

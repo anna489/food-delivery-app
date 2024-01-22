@@ -27,10 +27,11 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/Nav/index.tsx",
+    "src/components/Header/index.tsx",
     "src/components/Card/index.tsx",
     "src/components/CardModal/index.jsx",
-    "src/components/Footer/index.tsx"
+    "src/components/Footer/index.tsx",
+    ".next/types/app/passrestore/page.tsx"
   ],
   "exclude": ["node_modules"]
 }
