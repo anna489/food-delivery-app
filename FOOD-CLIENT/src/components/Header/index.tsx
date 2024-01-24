@@ -1,20 +1,11 @@
 "use client";
 
 import * as React from "react";
-import {
-  Grid,
-  Stack,
-  TextField,
-  Box,
-  Container,
-  Link,
-  Button,
-} from "@mui/material";
+import { Grid, Stack, TextField, Link, Button } from "@mui/material";
 import PineconeLogo from "../../../public/images/PineconeLogoBlack";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
-import RightDrawer from "@/components/RightDrawer";
 
 type Props = {};
 
@@ -22,7 +13,7 @@ export default function Nav(props: Props) {
   const [value, setValue] = React.useState("recents");
 
   return (
-    <main>
+    <Stack>
       <Grid
         container
         spacing={2}
@@ -30,7 +21,7 @@ export default function Nav(props: Props) {
           flexGrow: 2,
           display: "flex",
           justifyContent: "space-around",
-          marginTop: "20px",
+          margin: "20px",
         }}
       >
         <Grid>
@@ -89,6 +80,7 @@ export default function Nav(props: Props) {
               alignItems: "center",
               display: "flex",
               gap: "10px",
+              color: "black",
             }}
           >
             <ShoppingBasketOutlinedIcon />
@@ -112,6 +104,6 @@ export default function Nav(props: Props) {
           </Link>
         </Grid>
       </Grid>
-    </main>
+    </Stack>
   );
 }

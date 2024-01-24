@@ -8,8 +8,14 @@ import {
   Typography,
   Container,
   Button,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
-
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useRouter } from "next/navigation";
 
 type Props = {};
@@ -18,6 +24,16 @@ const StepThree = (props: Props) => {
   const router = useRouter();
   const handleLoginClick = () => {
     router.push("/login");
+  };
+
+  const [showPassword, setShowPassword] = React.useState(true);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
   };
 
   return (
@@ -44,11 +60,28 @@ const StepThree = (props: Props) => {
           }}
         >
           <Typography sx={{ fontWeight: 500 }}>Нууц үг </Typography>
-          <TextField
-            label="********* "
-            size="medium"
-            sx={{ width: "400px", marginTop: "10px" }}
-          />
+          <FormControl sx={{ mt: "20px  " }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">
+              ********
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+          </FormControl>
         </Stack>
 
         <Stack
@@ -60,11 +93,28 @@ const StepThree = (props: Props) => {
           }}
         >
           <Typography sx={{ fontWeight: 500 }}>Нууц үг давтах</Typography>
-          <TextField
-            label="Нууц үг "
-            size="medium"
-            sx={{ width: "400px", marginTop: "10px" }}
-          />
+          <FormControl sx={{ mt: "20px  " }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">
+              ********
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+          </FormControl>
         </Stack>
 
         <Stack>

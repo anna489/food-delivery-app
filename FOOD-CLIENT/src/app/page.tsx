@@ -4,6 +4,7 @@ import { Stack, Typography, Box, Container } from "@mui/material";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import RiceBowlIcon from "@mui/icons-material/RiceBowl";
+import Sale from "@/components/Card/Sale";
 
 export default function Home() {
   const cards = [
@@ -30,7 +31,7 @@ export default function Home() {
   ];
 
   return (
-    <main>
+    <div>
       <Box
         sx={{
           background: "#18BA51",
@@ -117,6 +118,9 @@ export default function Home() {
           );
         })}
       </Box>
-    </main>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Sale />
+      </Box>
+    </div>
   );
 }

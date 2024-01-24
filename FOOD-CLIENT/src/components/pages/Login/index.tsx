@@ -8,10 +8,14 @@ import {
   Typography,
   Container,
   Button,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  IconButton,
 } from "@mui/material";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
-
 import { useRouter } from "next/navigation";
 
 type Props = {};
@@ -24,6 +28,16 @@ const LoginPage = (props: Props) => {
 
   const handleStepOneClick = () => {
     router.push("/passrestore/stepone");
+  };
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
   };
 
   return (
@@ -64,21 +78,29 @@ const LoginPage = (props: Props) => {
           }}
         >
           <Typography sx={{ fontWeight: 500 }}>Нууц үг</Typography>
-          <TextField
-            id="input-with-icon-textfield"
-            label="Нууц үгээ оруулна уу"
-            size="medium"
-            sx={{ width: "400px", marginTop: "10px" }}
-            inputProps={{
-              startAdornment: (
+
+          <FormControl sx={{ m: 1 }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">
+              Нууц үг
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPassword ? "text" : "password"}
+              endAdornment={
                 <InputAdornment position="end">
-                  <VisibilityOffIcon
-                    sx={{ color: "#000000", height: "20px", width: "20px" }}
-                  />
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
                 </InputAdornment>
-              ),
-            }}
-          />
+              }
+              label="Password"
+            />
+          </FormControl>
 
           <Button
             sx={{
