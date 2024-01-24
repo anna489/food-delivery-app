@@ -1,10 +1,19 @@
 "use client";
 import * as React from "react";
-import { Stack, Typography, Box, Container } from "@mui/material";
+import {
+  Stack,
+  Typography,
+  Box,
+  Container,
+  Button,
+  Grid,
+  Link,
+} from "@mui/material";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import RiceBowlIcon from "@mui/icons-material/RiceBowl";
 import Sale from "@/components/Card/Sale";
+import Basic from "@/components/Card/Basic";
 
 export default function Home() {
   const cards = [
@@ -31,7 +40,7 @@ export default function Home() {
   ];
 
   return (
-    <div>
+    <>
       <Box
         sx={{
           background: "#18BA51",
@@ -82,45 +91,33 @@ export default function Home() {
           display: "flex",
           justifyContent: "center",
           gap: "150px",
+          marginTop: "100px",
         }}
       >
         {cards.map((card) => {
           return (
-            <Box
-              sx={{
-                height: "200px",
-                width: "300px",
-              }}
-            >
+            <Stack>
               <Stack
                 sx={{
-                  display: "flex",
+                  color: "#18BA51",
+                  padding: "30px",
                 }}
               >
-                <Stack
-                  sx={{
-                    color: "#18BA51",
-                    padding: "30px",
-                  }}
-                >
-                  {card.icon}
-                </Stack>
-                <Stack
-                  sx={{ border: "2px", fontSize: "20px", fontWeight: 600 }}
-                >
-                  {card.name}
-                </Stack>
-                <Stack sx={{ border: "2px", color: "#272727" }}>
-                  {card.description}
-                </Stack>
+                {card.icon}
               </Stack>
-            </Box>
+              <Stack sx={{ border: "2px", fontSize: "20px", fontWeight: 600 }}>
+                {card.name}
+              </Stack>
+              <Stack sx={{ border: "2px", color: "#272727" }}>
+                {card.description}
+              </Stack>
+            </Stack>
           );
         })}
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Sale />
-      </Box>
-    </div>
+
+      <Sale />
+      <Basic />
+    </>
   );
 }

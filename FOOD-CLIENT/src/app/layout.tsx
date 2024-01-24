@@ -11,12 +11,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        style={{
-          height: "auto",
-          maxWidth: "full",
-        }}
-      >
+      <body>
         <ThemeProvider>
           <Nav />
           {children}

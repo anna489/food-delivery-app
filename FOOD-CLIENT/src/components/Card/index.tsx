@@ -7,16 +7,22 @@ const Card = () => {
     <Box
       sx={{
         // height: "400px",
-        width: "400px",
+
         border: "2px",
         borderColor: "black",
+        display: "flex",
       }}
     >
       <ImageListItem>
         <Stack>
           <img
             src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e"
-            style={{ borderRadius: "20px", position: "relative" }}
+            style={{
+              borderRadius: "20px",
+              position: "relative",
+              width: "300px",
+              height: "200px",
+            }}
           />
         </Stack>
         <Stack>
@@ -41,7 +47,7 @@ const Card = () => {
         <Stack>
           <img
             src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e"
-            style={{ borderRadius: "20px" }}
+            style={{ borderRadius: "20px", width: "300px", height: "200px" }}
           />
           <Chip
             sx={{

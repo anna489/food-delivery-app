@@ -6,7 +6,11 @@ import {
   Typography,
   Box,
   Container,
+  Link,
+  Grid,
 } from "@mui/material";
+import StarIcon from "@mui/icons-material/Star";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const Sale = () => {
   const saleFood = [
@@ -41,13 +45,48 @@ const Sale = () => {
   ];
 
   return (
-    <Stack>
-      {saleFood.map((e) => {
-        return (
-          <Box sx={{ display: "flex" }}>
-            <ImageListItem sx={{ width: "350px" }}>
+    <Grid>
+      <Grid
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "55%",
+          marginTop: "100px",
+        }}
+      >
+        <Grid sx={{ display: "flex", alignItems: "center" }}>
+          <StarIcon sx={{ color: "#18BA51 ", height: "25px", width: "25px" }} />
+          <Typography sx={{ fontSize: "20px", fontWeight: 700 }}>
+             Хямдралтай
+          </Typography>
+        </Grid>
+
+        <Link underline="none" sx={{ alignItems: "center", display: "flex" }}>
+          Бүгдийг харах <KeyboardArrowRightIcon />
+        </Link>
+      </Grid>
+      <Grid
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "100px",
+          marginTop: "30px",
+        }}
+      >
+        {saleFood.map((e) => {
+          return (
+            <ImageListItem>
               <Stack>
-                <img src={e.img} style={{ borderRadius: "20px" }} />
+                <img
+                  src={e.img}
+                  style={{
+                    borderRadius: "20px",
+                    width: "300px",
+                    height: "200px",
+                  }}
+                />
                 <Chip
                   sx={{
                     position: "absolute",
@@ -95,10 +134,10 @@ const Sale = () => {
                 </Typography>
               </Stack>
             </ImageListItem>
-          </Box>
-        );
-      })}
-    </Stack>
+          );
+        })}
+      </Grid>
+    </Grid>
   );
 };
 

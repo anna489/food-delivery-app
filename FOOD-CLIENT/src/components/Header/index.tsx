@@ -15,13 +15,12 @@ export default function Nav(props: Props) {
   return (
     <Stack>
       <Grid
-        container
         spacing={2}
         sx={{
           flexGrow: 2,
           display: "flex",
           justifyContent: "space-around",
-          margin: "20px",
+          margin: "20px ",
         }}
       >
         <Grid>
@@ -41,7 +40,7 @@ export default function Nav(props: Props) {
           >
             <PineconeLogo />
             <Link
-              href="#"
+              href="/"
               underline="none"
               sx={{ fontWeight: 900, fontSize: "20px" }}
             >
