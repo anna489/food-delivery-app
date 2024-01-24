@@ -41,7 +41,7 @@ export default function Nav(props: Props) {
           >
             <PineconeLogo />
             <Link
-              href="/"
+              href="#"
               underline="none"
               sx={{ fontWeight: 900, fontSize: "20px" }}
             >
