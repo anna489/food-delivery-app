@@ -79,7 +79,7 @@ const LoginPage = (props: Props) => {
         >
           <Typography sx={{ fontWeight: 500 }}>Нууц үг</Typography>
 
-          <FormControl sx={{ m: 1 }} variant="outlined">
+          <FormControl sx={{ marginTop: "10px" }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Нууц үг
             </InputLabel>
