@@ -12,8 +12,8 @@ import {
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import RiceBowlIcon from "@mui/icons-material/RiceBowl";
-import Sale from "@/components/Card/Sale";
-import Basic from "@/components/Card/Basic";
+import Sale from "@/components/Cards/Sale";
+import Basic from "@/components/Cards/Basic";
 
 export default function Home() {
   const cards = [

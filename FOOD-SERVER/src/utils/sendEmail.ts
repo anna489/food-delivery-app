@@ -1,35 +1,33 @@
-"use strict";
 import nodemailer from "nodemailer";
 
-const transporter = nodemailer.createTransport({
-  port: 465,
-  secure: true,
+const transport = nodemailer.createTransport({
+  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
-    // TODO: replace `user` and `pass` values from <https://forwardemail.net>
-    user: "REPLACE-WITH-YOUR-ALIAS@YOURDOMAIN.COM",
-    pass: "REPLACE-WITH-YOUR-GENERATED-PASSWORD",
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
-// async..await is not allowed in global scope, must use a wrapper
-async function main() {
-  // send mail with defined transport object
-  const info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <foo@example.com>', // sender address
-    to: "bar@example.com, baz@example.com", // list of receivers
-    subject: "Hello ✔", // Subject line
-    text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>", // html body
+export const sendEmail = async (email: string, subject: string) => {
+  await transport.sendMail({
+    from: process.env.EMAIL_USER, // sender address
+    to: email, // list of receivers
+    subject, // Subject line
+    text: "Hello world", // plain text body
+    html: generateTemplate(email),
   });
+};
 
-  console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-  //
-  // NOTE: You can go to https://forwardemail.net/my-account/emails to see your email delivery status and preview
-  //       Or you can use the "preview-email" npm package to preview emails locally in browsers and iOS Simulator
-  //       <https://github.com/forwardemail/preview-email>
-  //
-}
-
-main().catch(console.error);
+const generateTemplate = (name: string) => {
+  return `
+    <div>
+    <h1>Hello ${name}</h1>
+    <h1>Welcome to our platform!</h1>
+    <p>Please click on the following link to verify your account.</p>
+    <a href="http://www.google.com" >Verify Account</a>
+    </div>
+    `;
+};
