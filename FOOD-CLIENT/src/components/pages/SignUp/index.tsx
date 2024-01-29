@@ -2,7 +2,6 @@
 
 import React from "react";
 import {
-  Box,
   Stack,
   TextField,
   Typography,
@@ -13,12 +12,12 @@ import {
   OutlinedInput,
   IconButton,
 } from "@mui/material";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
 import CloudQueueIcon from "@mui/icons-material/CloudQueue";
 import { useRouter } from "next/navigation";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { object, string } from "yup";
 
 type Props = {};
 
@@ -101,7 +100,6 @@ const SignUpPage = (props: Props) => {
           sx={{
             display: "flex",
             border: "10px",
-
             marginTop: "30px",
           }}
         >

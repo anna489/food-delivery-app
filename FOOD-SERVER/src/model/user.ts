@@ -26,8 +26,13 @@ const userSchema = new Schema({
     buildingNo: { type: Number },
   },
   role: {
-    type: ["Admin", "User", "Moderator"],
+    type: String,
+    enum: ["Admin", "User", "Moderator"],
     default: "User",
+  },
+  otp: {
+    type: String,
+    default: "",
   },
   createdAt: {
     type: Date,
@@ -36,11 +41,10 @@ const userSchema = new Schema({
 });
 
 userSchema.pre("save", async function async() {
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  // const salt = await bcrypt.genSalt(10);
+  // this.password = await bcrypt.hash(this.password, salt);
 });
 
-// userSchema.method.checkPassword;?
 const User = model("User", userSchema);
 
 export default User;

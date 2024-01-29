@@ -110,7 +110,7 @@ const LoginPage = (props: Props) => {
               color: "black",
               fontSize: "12px",
             }}
-            onClick={handleStepOneClick}
+            href="/pass-restore"
           >
             Нууц үг сэргээх
           </Button>
