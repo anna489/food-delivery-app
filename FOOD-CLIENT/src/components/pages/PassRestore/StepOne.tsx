@@ -34,6 +34,7 @@ const StepOne = ({ email, handleNext, handleChangeInput }: IStepProps) => {
           Нууц үг сэргээх
         </Typography>
         <Input label="Имэйл" onChange={handleChangeInput} name="email" />
+
         <Stack flex="row" width="100%" justifyContent="flex-end">
           <Button label={"Үргэлжлүүлэх"} onClick={handleNext} />
         </Stack>

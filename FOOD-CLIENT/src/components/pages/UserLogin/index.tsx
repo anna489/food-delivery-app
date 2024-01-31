@@ -145,7 +145,7 @@ const UserLogin = () => {
             >
               <LogoutIcon />
               <Link
-                href="/"
+                href="/login"
                 underline="none"
                 sx={{ fontSize: "15px", color: "black" }}
               >

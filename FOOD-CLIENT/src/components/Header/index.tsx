@@ -6,6 +6,7 @@ import PineconeLogo from "../../../public/images/PineconeLogoBlack";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
+import RightDrawer from "../RightDrawer";
 
 type Props = {};
 
@@ -72,23 +73,11 @@ export default function Nav(props: Props) {
           <Stack sx={{ alignItems: "center", display: "flex", border: "10px" }}>
             <TextField label="Хайх" size="small" />
           </Stack>
-          <Button
-            sx={{
-              fontWeight: 900,
-              fontSize: "19px",
-              alignItems: "center",
-              display: "flex",
-              gap: "10px",
-              color: "black",
-            }}
-          >
-            <ShoppingBasketOutlinedIcon />
-            Сагс
-          </Button>
-          {/* <RightDrawer /> */}
+
+          <RightDrawer />
           <Link
             color="secondary"
-            href="userlogin"
+            href="/userlogin"
             underline="none"
             sx={{
               fontWeight: 900,

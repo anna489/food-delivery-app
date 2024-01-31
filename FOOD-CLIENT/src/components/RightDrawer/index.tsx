@@ -4,10 +4,11 @@ import * as React from "react";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import { Grid, Typography, Container } from "@mui/material";
+import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 
 type Anchor = "right";
 
-export default function TemporaryDrawer() {
+export default function Right() {
   const [state, setState] = React.useState({
     right: false,
   });
@@ -30,7 +31,20 @@ export default function TemporaryDrawer() {
     <div>
       {(["right"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+          <Button
+            onClick={toggleDrawer(anchor, true)}
+            sx={{
+              fontWeight: 900,
+              fontSize: "19px",
+              alignItems: "center",
+              display: "flex",
+              gap: "10px",
+              color: "black",
+            }}
+          >
+            <ShoppingBasketOutlinedIcon />
+            {anchor}
+          </Button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}
@@ -118,18 +132,6 @@ export default function TemporaryDrawer() {
                     +
                   </Button>
                 </Grid>
-                {/* <Button
-                  sx={{
-                    color: "white",
-                    bgcolor: "#18BA51",
-                    fontWeight: 900,
-                    width: "100%",
-                    padding: "15px",
-                    marginTop: "10px",
-                  }}
-                >
-                  Сагслах
-                </Button> */}
               </Grid>
             </Container>
           </Drawer>
