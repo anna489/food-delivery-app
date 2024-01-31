@@ -31,7 +31,8 @@
     "src/components/Cards/index.tsx",
     "src/components/CardModal/index.jsx",
     "src/components/Footer/index.tsx",
-    ".next/types/app/passrestore/page.tsx"
+    ".next/types/app/passrestore/page.tsx",
+    "src/app/404.jsx"
   ],
   "exclude": ["node_modules"]
 }

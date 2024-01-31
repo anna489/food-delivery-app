@@ -43,7 +43,7 @@ export default function Right() {
             }}
           >
             <ShoppingBasketOutlinedIcon />
-            {anchor}
+            Сагс
           </Button>
           <Drawer
             anchor={anchor}

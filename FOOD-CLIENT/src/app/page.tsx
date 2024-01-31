@@ -1,14 +1,6 @@
 "use client";
 import * as React from "react";
-import {
-  Stack,
-  Typography,
-  Box,
-  Container,
-  Button,
-  Grid,
-  Link,
-} from "@mui/material";
+import { Stack, Typography, Box, Container } from "@mui/material";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import RiceBowlIcon from "@mui/icons-material/RiceBowl";
@@ -40,7 +32,7 @@ export default function Home() {
   ];
 
   return (
-    <>
+    <Stack>
       <Box
         sx={{
           background: "#18BA51",
@@ -115,9 +107,8 @@ export default function Home() {
           );
         })}
       </Box>
-
       <Sale />
       <Basic />
-    </>
+    </Stack>
   );
 }

@@ -10,7 +10,7 @@ import RightDrawer from "../RightDrawer";
 
 type Props = {};
 
-export default function Nav(props: Props) {
+export default function Header(props: Props) {
   const [value, setValue] = React.useState("recents");
 
   return (
