@@ -19,9 +19,10 @@ const MyStepper = () => {
 
   const handleNext = async () => {
     try {
-      const data = await axios.post("http://localhost:8080/verify/sendemail", {
+      const data = await axios.post("http://localhost:8080/verify/send-email", {
         email: user.email,
       });
+      console.log("emailruu code yvuuldan", data);
       setActiveStep((prev) => prev + 1);
     } catch (error) {
       toast.error("Email илгэээхэд алдаа гарлаа.");

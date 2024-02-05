@@ -24,14 +24,14 @@ const validationSchema = yup.object({
 });
 
 const LoginPage = () => {
-  const { user, login } = useContext(UserContext);
+  const { signup, login } = useContext(UserContext);
 
   const formik = useFormik({
     onSubmit: ({ email, password }) => {
       console.log(email);
       console.log(password);
     },
-    initialValues: { email: user.email, password: user.password },
+    initialValues: { email: "", password: "" },
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema,

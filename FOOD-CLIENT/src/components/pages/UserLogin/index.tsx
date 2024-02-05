@@ -19,7 +19,7 @@ const UserLogin = () => {
     {
       name: "Anar",
       image:
-        "https://i.pinimg.com/736x/a7/09/d6/a709d6525d714d3436d5932f079d3850.jpg",
+        "https://i.pinimg.com/736x/99/7b/a6/997ba618355917010f838f8289b41c20.jpg",
       phoneNumber: "99597575",
       email: "anar.gb2020@gmail.com",
     },

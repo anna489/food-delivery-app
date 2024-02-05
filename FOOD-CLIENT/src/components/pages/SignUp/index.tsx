@@ -10,23 +10,21 @@ import * as yup from "yup";
 import { UserContext } from "@/context/UserProvider";
 
 const validationSchema = yup.object({
-  name: yup.string().min(5, "at least should be 6 alphabet"),
+  name: yup.string().min(3, "at least should be 3 alphabet"),
   email: yup
     .string()
     .max(100, "")
     .required("И-мэйл хаягыг заавал оруулна уу")
-    .email("")
-    .matches(/^w+[+.w-]*@([w-]+.)*w+[w-]*.([a-z]{2,4}|d+)$/i, "nott"),
+    .email(""),
+  // .matches(/^w+[+.w-]*@([w-]+.)*w+[w-]*.([a-z]{2,4}|d+)$/i),
   password: yup
     .string()
     .required("Нууц үгээ  заавал оруулна уу")
-    .min(6, "at least should be 6 alphabet")
-    .matches(/^[a-z0-9_-]{6,18}$/, "missing period"),
-  rePassword: yup
-    .string()
-    .required("Нууц үгээ  заавал оруулна уу")
-    .oneOf([yup.ref("password isn't matching")])
-    .matches(/^[a-z0-9_-]{6,18}$/, "missing period"),
+    .min(6, "at least should be 6 alphabet"),
+  // .matches(/^[a-z0-9_-]{6,18}$/, "missing period"),
+  rePassword: yup.string().required("Нууц үгээ  заавал оруулна уу"),
+  // .oneOf([yup.ref("password isn't matching")]),
+  // .matches(/^[a-z0-9_-]{6,18}$/, "missing period"),
 });
 
 const SignUpPage = () => {
@@ -35,7 +33,7 @@ const SignUpPage = () => {
     router.push("/login");
   };
 
-  const { user, login } = useContext(UserContext);
+  const { signup, login } = useContext(UserContext);
 
   const formik = useFormik({
     onSubmit: ({ email, password, address, name, rePassword }) => {
@@ -44,13 +42,14 @@ const SignUpPage = () => {
       console.log(password);
       console.log(address);
       console.log(rePassword);
+      signup(name, email, password, address);
     },
     initialValues: {
-      name: user.name,
-      email: user.email,
-      password: user.password,
-      address: user.address,
-      rePassword: user.rePassword,
+      name: "",
+      email: "",
+      password: "",
+      address: "",
+      rePassword: "",
     },
     validateOnChange: false,
     validateOnBlur: false,

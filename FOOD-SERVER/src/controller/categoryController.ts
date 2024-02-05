@@ -28,7 +28,7 @@ export const getCategory = async (
     }
     res
       .status(200)
-      .json({ message: `${categoryId}found this  category `, findCatrogry });
+      .json({ message: `${categoryId}-found this  category `, findCatrogry });
   } catch (error) {
     next(error);
   }
@@ -66,7 +66,7 @@ export const updateCategory = async (
     }
     res
       .status(200)
-      .json({ message: `${categoryId}found this  category `, category });
+      .json({ message: `${categoryId}-found this  category `, category });
   } catch (error) {
     next(error);
   }
