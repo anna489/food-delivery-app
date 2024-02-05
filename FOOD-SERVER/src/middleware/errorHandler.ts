@@ -3,11 +3,11 @@ import { Response, Request, NextFunction } from "express";
 const errorHandler = (
   err: Error,
   req: Request,
-  res: Responce,
+  res: Response,
   next: NextFunction
 ) => {
   console.log("err midd====>", err.stack?.red.underline);
-  res.status(500).josn({ message: err.message || "internal server error" });
+  res.status(500).json({ message: err.message || "internal server error" });
 };
 
 export default errorHandler;
