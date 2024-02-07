@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import axios, { AxiosError } from "axios";
 
 import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
@@ -9,12 +10,12 @@ import Typography from "@mui/material/Typography";
 
 import FoodCard from "./food-card";
 import FoodSort from "./food-sort";
-// import ProductFilters from "./product-filters";
-// import ProductCartWidget from "./product-cart-widget";
 
 // ----------------------------------------------------------------------
 import { sample } from "lodash";
 import { faker } from "@faker-js/faker";
+import { Button } from "@mui/material";
+import Iconify from "@/components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -65,21 +66,90 @@ export const products = [...Array(FOOD_NAME.length)].map((_, index) => {
 // ----------------------------------------------------------------------
 
 export default function FoodView() {
-  const [openFilter, setOpenFilter] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [file, setFile] = useState<File | null>(null);
 
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
+  const [newFood, setNewFood] = useState({
+    name: "",
+    description: "",
+    image: "",
+  });
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFile(e.currentTarget.files![0]);
   };
 
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setNewFood({ ...newFood, [name]: value });
   };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(() => false);
+  };
+
+  const createFood = async () => {
+    try {
+      const formData = new FormData();
+      formData.set("image", file!);
+      formData.set("name", newFood.name);
+      formData.set("description", newFood.description);
+
+      const {
+        data: { food },
+      } = (await axios.post("http://localhost:8080/food", formData)) as {
+        data: { food: object };
+      };
+
+      // setCategories(categories);
+      console.log("Success Add Food");
+    } catch (error: any) {
+      alert("Add Error - " + error.message);
+    }
+  };
+
+  const getFood = async () => {
+    try {
+      const {
+        data: { categories },
+      } = (await axios.get("http://localhost:8080/food")) as {
+        data: { categories: [] };
+      };
+
+      setCategories(categories);
+    } catch (error: any) {
+      alert("Get Error - " + error.message);
+    }
+  };
+
+  useEffect(() => {
+    getFood();
+  }, []);
 
   return (
     <Container>
-      <Typography variant="h4" sx={{ mb: 5 }}>
-        Хоолны жагсаалт
-      </Typography>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        mb={5}
+      >
+        <Typography variant="h4" sx={{ mb: 5 }}>
+          Хоолны жагсаалт
+        </Typography>
+        <Button
+          variant="contained"
+          color="inherit"
+          startIcon={<Iconify icon="eva:plus-fill" />}
+        >
+          Шинэ хоол
+        </Button>
+      </Stack>
 
       <Stack
         direction="row"
@@ -89,12 +159,6 @@ export default function FoodView() {
         sx={{ mb: 2 }}
       >
         <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-          {/* <ProductFilters
-            openFilter={openFilter}
-            onOpenFilter={handleOpenFilter}
-            onCloseFilter={handleCloseFilter}
-          /> */}
-
           <FoodSort />
         </Stack>
       </Stack>
@@ -106,8 +170,6 @@ export default function FoodView() {
           </Grid>
         ))}
       </Grid>
-
-      {/* <ProductCartWidget /> */}
     </Container>
   );
 }

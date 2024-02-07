@@ -1,11 +1,12 @@
 "use client";
 import * as React from "react";
-import { Stack, Typography, Box, Container } from "@mui/material";
+import { Stack, Typography, Box, Container, Grid } from "@mui/material";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import RiceBowlIcon from "@mui/icons-material/RiceBowl";
 import Sale from "@/components/Cards/Sale";
 import Basic from "@/components/Cards/Basic";
+// import AppWidgetSummary from "./app-widget-summary";
 
 export default function Home() {
   const cards = [
@@ -107,6 +108,7 @@ export default function Home() {
           );
         })}
       </Box>
+
       <Sale />
       <Basic />
     </Stack>
