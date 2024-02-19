@@ -49,7 +49,6 @@ export default function CategoryView() {
   const [newCategory, setNewCategory] = useState({
     name: "",
     description: "",
-    image: "",
   });
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -75,10 +74,14 @@ export default function CategoryView() {
       formData.set("image", file!);
       formData.set("name", newCategory.name);
       formData.set("description", newCategory.description);
-
+      const token = localStorage.getItem("token");
       const {
         data: { category },
-      } = (await axios.post("http://localhost:8080/category", formData)) as {
+      } = (await axios.post("http://localhost:8080/categories", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })) as {
         data: { category: object };
       };
 
@@ -93,7 +96,7 @@ export default function CategoryView() {
     try {
       const {
         data: { categories },
-      } = (await axios.get("http://localhost:8080/category")) as {
+      } = (await axios.get("http://localhost:8080/categories")) as {
         data: { categories: [] };
       };
 

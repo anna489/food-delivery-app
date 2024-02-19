@@ -1,7 +1,7 @@
 import "./globals.scss";
 
 import { ThemeProvider } from "@/theme";
-import Header from "@/components/Header";
+import { Header } from "@/components/Header";
 import Footer from "../components/Footer";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";

@@ -1,97 +1,206 @@
 "use client";
 
-import * as React from "react";
-import { Grid, Stack, TextField, Link, Button } from "@mui/material";
-import PineconeLogo from "../../../public/images/PineconeLogoBlack";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import { useState, MouseEvent } from "react";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Avatar,
+  Tooltip,
+  MenuItem,
+  OutlinedInput,
+} from "@mui/material";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
-import RightDrawer from "../RightDrawer";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 
-type Props = {};
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
-export default function Header(props: Props) {
-  const [value, setValue] = React.useState("recents");
+import Link from "next/link";
+import MyDrawer from "../Drawer";
+
+const pages = ["НҮҮР", "ХООЛНЫ ЦЭС", "ХҮРГЭЛТИЙН БҮС"];
+const settings = ["Профайл", "Тохиргоо", , "Гарах"];
+
+export const Header = () => {
+  const user = null;
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [drawer, setDrawer] = useState(false);
+
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleOpenDrawer = () => setDrawer(true);
+  const handleCloseDrawer = () => setDrawer(false);
 
   return (
-    <Stack>
-      <Grid
-        spacing={2}
-        sx={{
-          flexGrow: 2,
-          display: "flex",
-          justifyContent: "space-around",
-          margin: "20px ",
-        }}
-      >
-        <Grid>
-          <BottomNavigation
-            showLabels
-            sx={{
-              width: 600,
-              alignItems: "center",
-              display: "flex",
-              gap: "70px",
-              justifyContent: "center",
-            }}
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          >
-            <PineconeLogo />
-            <Link
-              href="/"
-              underline="none"
-              sx={{ fontWeight: 900, fontSize: "20px" }}
-            >
-              {"Нүүр"}
-            </Link>
-            <Link
-              href="/foodmenu"
-              underline="none"
-              sx={{ fontWeight: 900, fontSize: "20px" }}
-            >
-              {"Хоолны цэс"}
-            </Link>
-            <Link
-              href="deliveryregion"
-              underline="none"
-              sx={{ fontWeight: 900, fontSize: "20px" }}
-            >
-              {"Хүргэлтийн бүс"}
-            </Link>
-          </BottomNavigation>
-        </Grid>
-        <Grid
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-          }}
-        >
-          <Stack sx={{ alignItems: "center", display: "flex", border: "10px" }}>
-            <TextField label="Хайх" size="small" />
-          </Stack>
+    <AppBar
+      position="static"
+      sx={{
+        background: "white",
+        boxShadow: "none",
+        borderBottom: "1px lightgrey solid",
+      }}
+    >
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          {/* <PineconeLogo /> */}
 
-          <RightDrawer />
-          <Link
-            color="secondary"
-            href="/userlogin"
-            underline="none"
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {pages.map((page) => (
+              <Link
+                key={page}
+                onClick={handleCloseNavMenu}
+                href={"/"}
+                style={{
+                  color: "black",
+                  textDecoration: "none",
+                  margin: "auto 8px",
+                  fontSize: "1rem",
+                  fontWeight: 700,
+                  padding: "8px 16px",
+                }}
+              >
+                {page}
+              </Link>
+            ))}
+          </Box>
+
+          <Box
             sx={{
-              fontWeight: 900,
-              fontSize: "20px",
+              display: { xs: "none", md: "flex" },
               alignItems: "center",
-              display: "flex",
-              gap: "10px",
+              position: "relative",
             }}
           >
-            <PersonOutlineOutlinedIcon sx={{}} />
-            НЭВТРЭХ
-          </Link>
-        </Grid>
-      </Grid>
-    </Stack>
+            <SearchOutlinedIcon
+              fontSize="medium"
+              sx={{ position: "absolute", left: 12 }}
+            />
+            <OutlinedInput
+              placeholder="Search"
+              sx={{ borderRadius: 3, pl: 6, height: "42px" }}
+            />
+          </Box>
+
+          <Box
+            sx={{ display: "flex", alignItems: "center", gap: 2, flexGrow: 0 }}
+          >
+            <Box sx={{ px: 2 }}>
+              <IconButton onClick={handleOpenDrawer} color="inherit">
+                <ShoppingBasketOutlinedIcon fontSize="medium" />
+                <span
+                  style={{
+                    display: "inline-block",
+                    marginLeft: "8px",
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Сагс
+                </span>
+              </IconButton>
+              <MyDrawer open={drawer} handleClose={handleCloseDrawer} />
+            </Box>
+            <Box sx={{ px: 2 }}>
+              <IconButton onClick={() => {}} color="inherit" href="/login">
+                <PersonOutlineOutlinedIcon fontSize="medium" />
+                <span
+                  style={{
+                    display: "inline-block",
+                    marginLeft: "8px",
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Нэвтрэх
+                </span>
+              </IconButton>
+            </Box>
+
+            {user && (
+              <Tooltip title="Профайл">
+                <IconButton onClick={handleOpenUserMenu}>
+                  <Avatar alt="User" src="" />
+                </IconButton>
+              </Tooltip>
+            )}
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
-}
+};
