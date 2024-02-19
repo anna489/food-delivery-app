@@ -14,33 +14,29 @@ const validationSchema = yup.object({
     .string()
     .max(100, "")
     .required("И-мэйл хаягыг заавал оруулна уу")
-    .email("")
-    .matches(/^w+[+.w-]*@([w-]+.)*w+[w-]*.([a-z]{2,4}|d+)$/i, "nott"),
+    .email(""),
+  // .matches(/^w+[+.w-]*@([w-]+.)*w+[w-]*.([a-z]{2,4}|d+)$/i, "nott"),
   password: yup
     .string()
     .required("Нууц үгээ  заавал оруулна уу")
-    .min(6, "at least should be 6 alphabet")
-    .matches(/^[a-z0-9_-]{6,18}$/, "missing period"),
+    .min(6, "at least should be 6 alphabet"),
+  // .matches(/^[a-z0-9_-]{6,18}$/, "missing period"),
 });
 
 const LoginPage = () => {
-  const { signup, login } = useContext(UserContext);
+  const { login } = useContext(UserContext);
 
   const formik = useFormik({
     onSubmit: ({ email, password }) => {
-      console.log(email);
-      console.log(password);
+      console.log("EMAIL", email);
+      console.log("PASS", password);
+      login(email, password);
     },
     initialValues: { email: "", password: "" },
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema,
   });
-
-  const router = useRouter();
-  const handleSignUpClick = () => {
-    router.push("/signup");
-  };
 
   return (
     <Container>
@@ -99,7 +95,7 @@ const LoginPage = () => {
           >
             Эсвэл
           </Typography>
-          <Button label={"Бүртгүүлэх"} onClick={handleSignUpClick} />
+          <Button label={"Бүртгүүлэх"} href="/signup" />
         </Stack>
       </Box>
     </Container>

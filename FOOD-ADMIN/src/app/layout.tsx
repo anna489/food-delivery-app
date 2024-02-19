@@ -1,5 +1,7 @@
 import ThemeProvider from "@/theme";
 import "./globals.css";
+import AuthProvider from "@/context/authProvider";
+import CatProvider from "@/context/catProvider";
 
 export default function RootLayout({
   children,
@@ -9,7 +11,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <CatProvider>{children}</CatProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

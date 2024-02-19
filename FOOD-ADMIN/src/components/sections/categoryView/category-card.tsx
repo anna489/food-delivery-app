@@ -7,7 +7,7 @@ import { fDate } from "@/utils/format-time";
 
 // ----------------------------------------------------------------------
 export default function CategoryCard({ category }: any) {
-  const { image, name, createdAt, description } = category;
+  const { name, createdAt, CategoryUrl, description } = category;
 
   const renderTitle = (
     <Link
@@ -45,7 +45,7 @@ export default function CategoryCard({ category }: any) {
     <Box
       component="img"
       alt={name}
-      src={image}
+      src={CategoryUrl}
       sx={{
         top: 0,
         width: 1,

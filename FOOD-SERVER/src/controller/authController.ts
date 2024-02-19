@@ -3,6 +3,7 @@ import User from "../model/user";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { sendEmail } from "../utils/sendEmail";
+import MyError from "../utils/myError";
 // import { compareSync } from "bcrypt";
 
 export const signup = async (req: Request, res: Response) => {
@@ -31,24 +32,38 @@ export const login = async (
   next: NextFunction
 ) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email }).select("+password");
+    const { userEmail, userPassword } = req.body;
+    console.log("LOGIN", userEmail);
+
+    const user = await User.findOne({ email: userEmail })
+      .select("+password")
+      .lean();
 
     if (!user) {
-      throw new Error(`${email} account isn't signup.`);
+      throw new MyError(`${userEmail}-тэй хэрэглэгч бүртгэлгүй байна.`, 400);
     }
 
-    const isValid = await bcrypt.compare(password, user.password);
+    const isValid = await bcrypt.compare(userPassword, user.password);
 
     if (!isValid) {
-      throw new Error(`email or password is wrong`);
+      throw new MyError(`Имэйл эсвэл нууц үг буруу байна.`, 400);
     }
 
-    const token = jwt.sign({ id: user._id }, "654321" as string, {
-      expiresIn: "1d",
+    const token = jwt.sign(
+      {
+        id: user._id,
+      },
+      process.env.JWT_PRIVATE_KEY as string,
+      { expiresIn: process.env.JWT_EXPIRE_IN }
+    );
+
+    const { password, ...otherParams } = user;
+
+    res.status(201).json({
+      message: "Хэрэглэгч амжилттай нэвтэрлээ",
+      token,
+      user: otherParams,
     });
-    res.status(201).send({ message: "Хэрэглэгч нэвтэрлээ", token });
-    res.status(201).json({ message: "Амжилттай нэвтэрлээ", user });
   } catch (error) {
     next(error);
   }

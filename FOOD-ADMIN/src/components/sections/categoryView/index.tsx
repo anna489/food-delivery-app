@@ -13,53 +13,33 @@ import CategorySort from "./category-sort";
 import CategorySearch from "./category-search";
 
 // ----------------------------------------------------------------------
-import { faker } from "@faker-js/faker";
 import CategoryModal from "@/components/categoryModal";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import axios, { AxiosError } from "axios";
-
-// ----------------------------------------------------------------------
-
-const CATEGORY_TITLES = [
-  "Whiteboard Templates",
-  "Tesla Cybertruck-inspired",
-  "Designify Agency",
-  "✨What is Done is Done ✨",
-  "Fresh Prince",
-  "Six Socks Studio",
-  "vincenzo de cotiis",
-];
-// const categories = [...Array(CATEGORY_TITLES.length)].map(
-//   (_, index) => ({
-//     id: faker.string.uuid(),
-//     cover: `/assets/images/covers/cover_${index + 1}.jpg`,
-//     title: CATEGORY_TITLES[index + 1],
-//     createdAt: faker.date.past(),
-//   })
-// );
+import { redirect } from "next/navigation";
+import { catContext } from "@/context/catProvider";
+import { authContext } from "@/context/authProvider";
 
 // ----------------------------------------------------------------------
 
 export default function CategoryView() {
+  const { checkIsLogged } = useContext(authContext);
+  useEffect(() => {
+    checkIsLogged();
+    if (!localStorage.getItem("token")) {
+      console.log("USER NOT FOUND");
+      redirect("/login");
+    }
+  }, []);
+  const {
+    categories,
+    getCategories,
+    uploadImage,
+    handleFile,
+    handleCategoryForm,
+  } = useContext(catContext);
   const [open, setOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [file, setFile] = useState<File | null>(null);
-
-  const [newCategory, setNewCategory] = useState({
-    name: "",
-    description: "",
-  });
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFile(e.currentTarget.files![0]);
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setNewCategory({ ...newCategory, [name]: value });
-  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -68,46 +48,8 @@ export default function CategoryView() {
     setOpen(() => false);
   };
 
-  const createCategory = async () => {
-    try {
-      const formData = new FormData();
-      formData.set("image", file!);
-      formData.set("name", newCategory.name);
-      formData.set("description", newCategory.description);
-      const token = localStorage.getItem("token");
-      const {
-        data: { category },
-      } = (await axios.post("http://localhost:8080/categories", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })) as {
-        data: { category: object };
-      };
-
-      // setCategories(categories);
-      console.log("Success Add Category");
-    } catch (error: any) {
-      alert("Add Error - " + error.message);
-    }
-  };
-
-  const getCategory = async () => {
-    try {
-      const {
-        data: { categories },
-      } = (await axios.get("http://localhost:8080/categories")) as {
-        data: { categories: [] };
-      };
-
-      setCategories(categories);
-    } catch (error: any) {
-      alert("Get Error - " + error.message);
-    }
-  };
-
   useEffect(() => {
-    getCategory();
+    getCategories();
   }, []);
 
   return (
@@ -146,16 +88,15 @@ export default function CategoryView() {
       </Stack>
       <Grid container spacing={3}>
         {categories?.map((category: any) => (
-          <CategoryCard key={category._id} category={category} />
+          <CategoryCard category={category} />
         ))}
       </Grid>
       <CategoryModal
         open={open}
         handleClose={handleClose}
-        newCategory={newCategory}
-        handleChange={handleChange}
-        handleFileChange={handleFileChange}
-        handleSave={createCategory}
+        handleChange={handleCategoryForm}
+        handleFileChange={handleFile}
+        handleSave={uploadImage}
       />
     </Container>
   );

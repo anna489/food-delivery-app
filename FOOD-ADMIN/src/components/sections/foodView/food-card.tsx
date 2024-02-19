@@ -1,17 +1,32 @@
+"use client";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { fCurrency } from "@/utils/format-number";
-
 import Label from "@/components/label";
 import { ColorPreview } from "@/components/color-utils";
+import Popover from "@mui/material/Popover";
+import MenuItem from "@mui/material/MenuItem";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import { useContext, useState } from "react";
+import { foodContext } from "@/context/foodProvider";
 
 // ----------------------------------------------------------------------
 
 export default function FoodCard({ product }: any) {
+  const { deleteFood } = useContext(foodContext);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const renderStatus = (
     <Label
       variant="filled"
@@ -32,7 +47,7 @@ export default function FoodCard({ product }: any) {
     <Box
       component="img"
       alt={product.name}
-      src={product.cover}
+      src={product.image}
       sx={{
         top: 0,
         width: 1,
@@ -84,8 +99,40 @@ export default function FoodCard({ product }: any) {
           alignItems="center"
           justifyContent="space-between"
         >
-          <ColorPreview colors={product.colors} />
           {renderPrice}
+          <div onClick={handleClick}>
+            <MoreVertIcon />
+          </div>
+
+          <Popover
+            id={product._id}
+            anchorEl={anchorEl}
+            open={open}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>
+              <EditOutlinedIcon />
+              Edit
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => {
+                deleteFood(product._id), handleClose();
+              }}
+              sx={{ color: "error.main" }}
+            >
+              <DeleteForeverOutlinedIcon />
+              Delete
+            </MenuItem>
+          </Popover>
         </Stack>
       </Stack>
     </Card>

@@ -82,7 +82,7 @@ export default function CategoryModal({
               startIcon={<CloudUploadIcon />}
               sx={{
                 color: "white",
-                justifyContent: "end",
+                justifyContent: "center",
                 display: "flex",
               }}
             >
@@ -91,7 +91,7 @@ export default function CategoryModal({
             </MuiButton>
           </Stack>
 
-          <Button label="нэмэх" onClick={handleSave}></Button>
+          <Button label="Add" onClick={handleSave}></Button>
         </Box>
       </Modal>
     </div>

@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-
+import PineconeLogo from "../Logo/PineconeBlack";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
@@ -57,11 +57,12 @@ export const Header = () => {
         background: "white",
         boxShadow: "none",
         borderBottom: "1px lightgrey solid",
+        padding: "10px",
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {/* <PineconeLogo /> */}
+        <Toolbar disableGutters sx={{ alignItems: "center", gap: "20px" }}>
+          <PineconeLogo />
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -144,7 +145,7 @@ export const Header = () => {
                   style={{
                     display: "inline-block",
                     marginLeft: "8px",
-                    fontSize: "1rem",
+                    fontSize: "18px",
                     fontWeight: "bold",
                   }}
                 >
@@ -160,7 +161,7 @@ export const Header = () => {
                   style={{
                     display: "inline-block",
                     marginLeft: "8px",
-                    fontSize: "1rem",
+                    fontSize: "18px",
                     fontWeight: "bold",
                   }}
                 >
