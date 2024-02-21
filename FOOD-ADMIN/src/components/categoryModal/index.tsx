@@ -42,6 +42,7 @@ export default function CategoryModal({
   handleClose,
   open,
   newCategory,
+  isLoading,
   handleChange,
   handleFileChange,
   handleSave,
@@ -91,7 +92,11 @@ export default function CategoryModal({
             </MuiButton>
           </Stack>
 
-          <Button label="Add" onClick={handleSave}></Button>
+          <Button
+            disabled={isLoading}
+            label="Add"
+            onClick={handleSave}
+          ></Button>
         </Box>
       </Modal>
     </div>

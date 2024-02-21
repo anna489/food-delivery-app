@@ -9,8 +9,10 @@ export const createCategory = async (
 ) => {
   try {
     const newCategory = req.body;
-    await Category.create(newCategory);
-    res.status(201).json({ message: "created category successfully" });
+    const category = await Category.create(newCategory);
+    res
+      .status(201)
+      .json({ message: "created category successfully", category });
   } catch (error) {
     next(error);
   }

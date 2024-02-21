@@ -14,7 +14,7 @@ import { authContext } from "../authProvider";
 interface ICreateFoodContext {
   foods: any;
   getFoods: () => void;
-  uploadFoodImage: () => void;
+  uploadImage: () => void;
   handleLoading: () => void;
   deleteFood: (foodId: string) => void;
   handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -41,48 +41,69 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
     image: "",
     category: "",
   });
+
+  const getFoods = async () => {
+    try {
+      setLoading(true);
+      const { foods } = await axios
+        .get("http://localhost:8080/food")
+        .then((res) => res.data);
+      setFoods(foods);
+      console.log("GET FOODS SUCCESS", foods);
+    } catch (error) {
+      console.log("ERROR IN FOODS FUNCTION", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleLoading = () => {
+    setLoading(true);
+  };
+
+  const createFood = async () => {
+    try {
+      const { data } = await axios.post("http://localhost:8080/food", {
+        name: foodForm.name,
+        price: foodForm.price,
+        description: foodForm.description,
+        image: foodForm.image,
+        category: foodForm.category,
+      });
+      console.log("create food data", data);
+      setFoods([...foods, data.food]);
+    } catch (error) {
+      console.log("ERROR IN FOOD FUNCTION");
+    }
+  };
+
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files![0]);
   };
   const handleFoodForm = (e: ChangeEvent<HTMLInputElement>) => {
     setFoodForm({ ...foodForm, [e.target.name]: e.target.value });
   };
-  const getFoods = async () => {
-    try {
-      const { foods } = await axios
-        .get("http://localhost:8080/food")
-        .then((res) => res.data);
-      setFoods(foods);
-    } catch (error) {}
-  };
-  const handleLoading = () => {
-    setLoading(true);
-  };
-  const createFood = async () => {
-    try {
-      console.log("FOOD FORM", foodForm);
-      const { food } = await axios
-        .post("http://localhost:8080/food", foodForm)
-        .then((res) => res.data);
-      setLoading(false);
-      setFoods([...foods, food]);
-    } catch (error) {}
-  };
-  const uploadFoodImage = async () => {
+
+  const uploadImage = async () => {
     try {
       const formData = new FormData();
       formData.set("image", file!);
-      const image = await axios.post("http://localhost:8080/upload", formData);
-      foodForm.image = image.data.url;
-
+      const image = await axios
+        .post("http://localhost:8080/upload", formData)
+        .then((res) => res.data);
+      console.log("IMAGE URL", image.result.url);
+      foodForm.image = image.result.url;
       createFood();
-    } catch (error) {}
+    } catch (error) {
+      console.log("ERROR IN UPLOAD IMAGE FUNCTION");
+    }
   };
+
   const deleteFoodFromArray = (id: string) => {
     setFoods((oldFoods: any) => {
       return oldFoods.filter((obj: any) => obj._id !== id);
     });
   };
+
   const deleteFood = async (foodId: string) => {
     try {
       const data = await axios.delete(`http://localhost:8080/food/${foodId}`, {
@@ -98,7 +119,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
       value={{
         foods,
         getFoods,
-        uploadFoodImage,
+        uploadImage,
         handleFoodForm,
         handleFile,
         foodForm,

@@ -48,18 +48,14 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-export default function FoodModal({ handleCloseFilter, openFilter }: any) {
-  React.useEffect(() => {
-    getCategories();
-  }, []);
+export default function FoodModal({
+  handleCloseFilter,
+  openFilter,
+  handleSave,
+}: any) {
   const { categories, getCategories } = React.useContext(catContext);
-  const {
-    uploadFoodImage,
-    handleFoodForm,
-    handleFile,
-    foodForm,
-    handleLoading,
-  } = React.useContext(foodContext);
+  const { uploadImage, handleFoodForm, handleFile, foodForm, handleLoading } =
+    React.useContext(foodContext);
   return (
     <div>
       <Modal
@@ -72,7 +68,7 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
           <Stack direction={"row"} justifyContent={"space-between"}>
             <Typography variant="h3">Хоол нэмэх хэсэг</Typography>
             <MuiButton onClick={handleCloseFilter} sx={{ fontSize: 23 }}>
-              X
+              x
             </MuiButton>
           </Stack>
 
@@ -107,12 +103,12 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
           <Stack>
             <FormControl sx={{ m: 1, minWidth: 120 }} required>
               <InputLabel id="demo-simple-select-disabled-label">
-                Катигори
+                Category
               </InputLabel>
               <Select
                 labelId="demo-simple-select-disabled-label"
                 id="demo-simple-select-disabled"
-                label="Катигори"
+                label="categry"
                 name="category"
                 // value={foodForm.category}
                 onChange={handleFoodForm}
@@ -138,12 +134,13 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
           </MuiButton>
           <Button
             onClick={() => {
-              handleLoading();
-              uploadFoodImage();
-              handleCloseFilter();
+              // handleLoading();
+              // uploadFoodImage();
+              // handleCloseFilter();
             }}
-            label="нэмэх"
+            label="Add"
           ></Button>
+          <Button label="Add" onClick={handleSave}></Button>
         </Box>
       </Modal>
     </div>

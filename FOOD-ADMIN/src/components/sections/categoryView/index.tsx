@@ -34,6 +34,7 @@ export default function CategoryView() {
   }, []);
   const {
     categories,
+    isLoading,
     getCategories,
     uploadImage,
     handleFile,
@@ -46,6 +47,10 @@ export default function CategoryView() {
   };
   const handleClose = () => {
     setOpen(() => false);
+  };
+  const handleSave = async () => {
+    await uploadImage();
+    handleClose();
   };
 
   useEffect(() => {
@@ -96,7 +101,8 @@ export default function CategoryView() {
         handleClose={handleClose}
         handleChange={handleCategoryForm}
         handleFileChange={handleFile}
-        handleSave={uploadImage}
+        handleSave={handleSave}
+        isLoading={isLoading}
       />
     </Container>
   );

@@ -1,31 +1,13 @@
-"use client";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import { fDate } from "@/utils/format-time";
-import { useContext, useState } from "react";
-import Popover from "@mui/material/Popover";
-import MenuItem from "@mui/material/MenuItem";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Stack } from "@mui/material";
-import { catContext } from "@/context/catProvider";
 
 // ----------------------------------------------------------------------
 export default function CategoryCard({ category }: any) {
-  const { image, name, createdAt, description, _id } = category;
-  const { deleteCategory } = useContext(catContext);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const { image, name, createdAt, description } = category;
 
   const renderTitle = (
     <Link
@@ -33,11 +15,11 @@ export default function CategoryCard({ category }: any) {
       variant="subtitle2"
       underline="hover"
       sx={{
-        height: 44,
         overflow: "hidden",
         WebkitLineClamp: 2,
         display: "-webkit-box",
         WebkitBoxOrient: "vertical",
+        fontSize: "25px",
       }}
     >
       {name}
@@ -105,43 +87,9 @@ export default function CategoryCard({ category }: any) {
         >
           {renderDate}
           {renderTitle}
-          <Stack direction="row" justifyContent="space-between">
-            {renderDesc}
-            <div onClick={handleClick}>
-              <MoreVertIcon />
-            </div>
-          </Stack>
+          {renderDesc}
         </Box>
       </Card>
-      <Popover
-        anchorEl={anchorEl}
-        open={open}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>
-          <EditOutlinedIcon />
-          Edit
-        </MenuItem>
-
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            deleteCategory(_id);
-          }}
-          sx={{ color: "error.main" }}
-        >
-          <DeleteForeverOutlinedIcon />
-          Delete
-        </MenuItem>
-      </Popover>
     </Grid>
   );
 }

@@ -17,7 +17,8 @@ import { foodContext } from "@/context/foodProvider";
 
 // ----------------------------------------------------------------------
 
-export default function FoodCard({ product }: any) {
+export default function FoodCard({ food }: any) {
+  const { image, name, createdAt, isSale, Category } = food;
   const { deleteFood } = useContext(foodContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -30,7 +31,7 @@ export default function FoodCard({ product }: any) {
   const renderStatus = (
     <Label
       variant="filled"
-      color={(product.status === "sale" && "error") || "info"}
+      color={(food.status === "sale" && "error") || "info"}
       sx={{
         zIndex: 9,
         top: 16,
@@ -39,15 +40,15 @@ export default function FoodCard({ product }: any) {
         textTransform: "uppercase",
       }}
     >
-      {product.status}
+      {food.status}
     </Label>
   );
 
   const renderImg = (
     <Box
       component="img"
-      alt={product.name}
-      src={product.image}
+      alt={name}
+      src={image}
       sx={{
         top: 0,
         width: 1,
@@ -68,10 +69,10 @@ export default function FoodCard({ product }: any) {
           textDecoration: "line-through",
         }}
       >
-        {product.priceSale && fCurrency(product.priceSale)}
+        {isSale && fCurrency(isSale)}
       </Typography>
       &nbsp;
-      {fCurrency(product.price)}
+      {fCurrency(isSale)}
     </Typography>
   );
 
@@ -84,14 +85,14 @@ export default function FoodCard({ product }: any) {
       }}
     >
       <Box sx={{ pt: "100%", position: "relative" }}>
-        {product.status && renderStatus}
+        {food.status && renderStatus}
 
         {renderImg}
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
-          {product.name}
+          {name}
         </Link>
 
         <Stack
@@ -105,7 +106,7 @@ export default function FoodCard({ product }: any) {
           </div>
 
           <Popover
-            id={product._id}
+            id={food._id}
             anchorEl={anchorEl}
             open={open}
             anchorOrigin={{
@@ -123,16 +124,16 @@ export default function FoodCard({ product }: any) {
               Edit
             </MenuItem>
 
-            <MenuItem
+            {/* <MenuItem
               onClick={() => {
                 handleClose();
-                deleteFood(product._id);
+                deleteFood(food._id);
               }}
               sx={{ color: "error.main" }}
             >
               <DeleteForeverOutlinedIcon />
               Delete
-            </MenuItem>
+            </MenuItem> */}
           </Popover>
         </Stack>
       </Stack>
