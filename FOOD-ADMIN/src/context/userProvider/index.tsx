@@ -16,7 +16,7 @@ const UserProvider = ({ children }: PropsWithChildren) => {
   const getCustomers = async () => {
     try {
       const data = await axios
-        .get("http://localhost:8080/users")
+        .get("http://localhost:8080/user")
         .then((res) => res.data);
       setCustomers(data.users);
     } catch (error) {

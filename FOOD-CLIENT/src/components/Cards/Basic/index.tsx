@@ -1,117 +1,95 @@
-import React from "react";
+"use client";
+import React, { useContext, useState } from "react";
 import {
-  ImageListItem,
-  Stack,
-  Chip,
+  Card,
+  CardMedia,
+  CardContent,
   Typography,
   Box,
-  Container,
-  Link,
-  Grid,
+  Modal,
+  Stack,
+  MenuItem,
 } from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+// import OrderModal from "../OrderModal";
+import { foodContext } from "@/context/foodProvider";
 
-const Sale = () => {
-  const saleFood = [
-    {
-      name: "Breakfast",
-      img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+type Props = {
+  isDiscounted: undefined | boolean;
+  name: string;
+  price: number;
+  image: string;
+  discountPrice?: number;
+  food: any;
+};
 
-      baseprice: "28000₮",
-    },
-    {
-      name: "Breakfast",
-      img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-
-      baseprice: "28000₮",
-    },
-    {
-      name: "Breakfast",
-      img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-
-      baseprice: "28000₮",
-    },
-    {
-      name: "Breakfast",
-      img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-
-      baseprice: "28000₮",
-    },
-  ];
-
+const FoodCard = ({
+  isDiscounted = false,
+  name,
+  price,
+  image,
+  discountPrice = 0,
+  food,
+}: Props) => {
+  const { openOrderModal } = useContext(foodContext);
   return (
-    <Grid>
-      <Grid
+    <>
+      <Card
+        onClick={() => {
+          openOrderModal(food);
+        }}
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "55%",
-          marginTop: "100px",
+          width: 345,
+          boxShadow: "none",
+          position: "relative",
         }}
       >
-        <Grid sx={{ display: "flex", alignItems: "center" }}>
-          <StarIcon sx={{ color: "#18BA51 ", height: "25px", width: "25px" }} />
-          <Typography sx={{ fontSize: "20px", fontWeight: 700 }}>
-            Үндсэн хоол
+        {isDiscounted && (
+          <Box
+            position="absolute"
+            bgcolor="#18BA51"
+            color="white"
+            paddingX="15px"
+            fontSize="25px"
+            borderRadius="40px"
+            border="1px solid white"
+            top="35px"
+            right="35px"
+          >
+            20%
+          </Box>
+        )}
+
+        <CardMedia
+          sx={{ height: 200, borderRadius: "20px" }}
+          image={image}
+          title={name}
+        />
+        <CardContent>
+          <Typography variant="h5" fontWeight="bold">
+            {name}
           </Typography>
-        </Grid>
-
-        <Link underline="none" sx={{ alignItems: "center", display: "flex" }}>
-          Бүгдийг харах <KeyboardArrowRightIcon />
-        </Link>
-      </Grid>
-      <Grid
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "100px",
-          marginTop: "30px",
-        }}
-      >
-        {saleFood.map((e) => {
-          return (
-            <ImageListItem>
-              <Stack>
-                <img
-                  src={e.img}
-                  style={{
-                    borderRadius: "20px",
-                    width: "300px",
-                    height: "200px",
-                  }}
-                />
-              </Stack>
-              <Stack>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: "25px",
-                    marginTop: "10px",
-                  }}
-                >
-                  {e.name}
-                </Typography>
-
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: "20px",
-
-                    color: "#18BA51",
-                  }}
-                >
-                  {e.baseprice}
-                </Typography>
-              </Stack>
-            </ImageListItem>
-          );
-        })}
-      </Grid>
-    </Grid>
+          {isDiscounted ? (
+            <div className="flex gap-5">
+              <Typography variant="h6" color="#18BA51" fontWeight="bold">
+                {discountPrice}₮
+              </Typography>
+              <Typography
+                variant="h6"
+                color="black"
+                sx={{ textDecoration: "line-through" }}
+              >
+                {price}₮
+              </Typography>
+            </div>
+          ) : (
+            <Typography variant="h6" color="#18BA51" fontWeight="bold">
+              {price}₮
+            </Typography>
+          )}
+        </CardContent>
+      </Card>
+    </>
   );
 };
 
-export default Sale;
+export default FoodCard;

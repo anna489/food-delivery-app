@@ -34,6 +34,7 @@ const CatProvider = ({ children }: PropsWithChildren) => {
     description: "",
     image: "",
   });
+
   const getCategories = async () => {
     try {
       const { categories } = await axios
@@ -52,7 +53,7 @@ const CatProvider = ({ children }: PropsWithChildren) => {
         .post("http://localhost:8080/category", {
           name: categoryForm.name,
           description: categoryForm.description,
-          CategoryUrl: categoryForm.image,
+          image: categoryForm.image,
         })
         .then((res) => res.data);
       setCategories([...categories, data.newCategory]);

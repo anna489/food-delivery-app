@@ -62,8 +62,8 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     try {
       setLoading(true);
       const data = await MyAxios.post("/auth/login", {
-        email: email,
-        password: password,
+        userEmail: email,
+        userPassword: password,
       });
       setUserForm(data.data);
       await Swal.fire({

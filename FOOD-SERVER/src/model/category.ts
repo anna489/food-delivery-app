@@ -3,17 +3,17 @@ import { Schema, model } from "mongoose";
 const categorySchema = new Schema({
   name: {
     type: String,
-    require: [true, "should add category name"],
+    required: [true, ""],
     unique: true,
-    maxlength: [50, "max appahbet is 50"],
+    maxlenght: [50, ""],
   },
   description: {
     type: String,
-    required: [true, "should add description"],
+    required: [true, ""],
   },
-  CaregoryUrl: {
+  image: {
     type: String,
-    default: "no-category-photo",
+    default: "no category image",
   },
   createdAt: {
     type: Date,
@@ -22,5 +22,4 @@ const categorySchema = new Schema({
 });
 
 const Category = model("Category", categorySchema);
-
 export default Category;

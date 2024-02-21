@@ -9,7 +9,7 @@ export const sendEmailToUser = async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
 
-    const otp = Math.round(Math.random() * 10000)
+    const otp = Math.round(Math.random() * 100000)
       .toString()
       .padStart(4, "0");
 

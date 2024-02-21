@@ -1,4 +1,3 @@
-"use client";
 import * as React from "react";
 import {
   Box,
@@ -50,10 +49,10 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function FoodModal({ handleCloseFilter, openFilter }: any) {
-  const { categories, getCategories } = React.useContext(catContext);
   React.useEffect(() => {
     getCategories();
   }, []);
+  const { categories, getCategories } = React.useContext(catContext);
   const {
     uploadFoodImage,
     handleFoodForm,
@@ -73,7 +72,7 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
           <Stack direction={"row"} justifyContent={"space-between"}>
             <Typography variant="h3">Хоол нэмэх хэсэг</Typography>
             <MuiButton onClick={handleCloseFilter} sx={{ fontSize: 23 }}>
-              x
+              X
             </MuiButton>
           </Stack>
 
@@ -115,7 +114,7 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
                 id="demo-simple-select-disabled"
                 label="Катигори"
                 name="category"
-                value={foodForm.category}
+                // value={foodForm.category}
                 onChange={handleFoodForm}
               >
                 {categories?.map((category: any) => {
@@ -133,7 +132,6 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
             component="label"
             variant="contained"
             startIcon={<CloudUploadIcon />}
-            sx={{ color: "white", width: "100%" }}
           >
             Upload file
             <VisuallyHiddenInput type="file" onChange={handleFile} />
@@ -144,7 +142,7 @@ export default function FoodModal({ handleCloseFilter, openFilter }: any) {
               uploadFoodImage();
               handleCloseFilter();
             }}
-            label="Add"
+            label="нэмэх"
           ></Button>
         </Box>
       </Modal>

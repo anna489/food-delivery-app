@@ -125,7 +125,8 @@ export default function FoodCard({ product }: any) {
 
             <MenuItem
               onClick={() => {
-                deleteFood(product._id), handleClose();
+                handleClose();
+                deleteFood(product._id);
               }}
               sx={{ color: "error.main" }}
             >
