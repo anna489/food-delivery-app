@@ -35,6 +35,7 @@ export const getCategory = async (
     next(error);
   }
 };
+
 export const getAllCategory = async (
   req: Request,
   res: Response,

@@ -32,6 +32,7 @@ export default function CategoryView() {
       redirect("/login");
     }
   }, []);
+
   const {
     categories,
     isLoading,
@@ -40,6 +41,7 @@ export default function CategoryView() {
     handleFile,
     handleCategoryForm,
   } = useContext(catContext);
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {

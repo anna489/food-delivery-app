@@ -12,6 +12,7 @@ import Image from "next/image";
 import { Remove, Add, Close } from "@mui/icons-material";
 import { Button, Input } from "../core";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { foodContext } from "@/context/foodProvider";
 
 const style = {
   position: "absolute" as "absolute",

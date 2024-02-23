@@ -13,28 +13,30 @@ import { authContext } from "../authProvider";
 
 interface ICreateFoodContext {
   foods: any;
+  isLoading: boolean;
   getFoods: () => void;
   uploadImage: () => void;
-  handleLoading: () => void;
   deleteFood: (foodId: string) => void;
   handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleFoodForm: (e: any) => void;
-  foodForm: {
-    name: string;
-    price: number;
-    description: string;
-    image: string;
-    category: string;
-  };
-  loading: boolean;
+  handleFoodForm: (e: ChangeEvent<HTMLInputElement>) => void;
 }
-export const foodContext = createContext({} as ICreateFoodContext);
+
+export const foodContext = createContext<ICreateFoodContext>({
+  getFoods: () => {},
+  handleFile: () => {},
+  handleFoodForm: () => {},
+  uploadImage: () => {},
+  deleteFood: (catId: string) => {},
+  foods: [],
+  isLoading: false,
+});
+
 const FoodProvider = ({ children }: PropsWithChildren) => {
   const { token } = useContext(authContext);
-  const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [foods, setFoods] = useState<any>();
-  let [foodForm, setFoodForm] = useState<any>({
+  const [foodForm, setFoodForm] = useState<any>({
     name: "",
     price: 0,
     description: "",
@@ -44,7 +46,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
 
   const getFoods = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const { foods } = await axios
         .get("http://localhost:8080/food")
         .then((res) => res.data);
@@ -53,11 +55,8 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
     } catch (error) {
       console.log("ERROR IN FOODS FUNCTION", error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
-  };
-  const handleLoading = () => {
-    setLoading(true);
   };
 
   const createFood = async () => {
@@ -76,6 +75,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  const [file, setFile] = useState<File | null>(null);
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files![0]);
   };
@@ -91,10 +91,12 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
         .post("http://localhost:8080/upload", formData)
         .then((res) => res.data);
       console.log("IMAGE URL", image.result.url);
+
       foodForm.image = image.result.url;
+
       createFood();
     } catch (error) {
-      console.log("ERROR IN UPLOAD IMAGE FUNCTION");
+      console.log("ERROR IN UPLOAD IMAGE FUNCTION", error);
     }
   };
 
@@ -122,10 +124,8 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
         uploadImage,
         handleFoodForm,
         handleFile,
-        foodForm,
+        isLoading,
         deleteFood,
-        loading,
-        handleLoading,
       }}
     >
       {children}

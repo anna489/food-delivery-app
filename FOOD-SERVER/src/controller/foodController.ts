@@ -10,8 +10,8 @@ export const createFood = async (
 ) => {
   try {
     const newFood = req.body;
-    await Food.create(newFood);
-    res.status(201).json({ message: "created Food successfully" });
+    const food = await Food.create(newFood);
+    res.status(201).json({ message: "Created Food successfully", food });
   } catch (error) {
     next(error);
   }
@@ -38,10 +38,10 @@ export const getAllFood = async (
   next: NextFunction
 ) => {
   try {
-    const { findFood } = req.params;
-    const foods = await Food.find().populate("category");
+    const { foodId } = req.params;
+    const foods = await Food.find();
 
-    res.status(200).json({ message: `${findFood}-found all  foods `, foods });
+    res.status(200).json({ message: `${foodId}-found all  foods `, foods });
   } catch (error) {
     next(error);
   }

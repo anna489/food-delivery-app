@@ -14,11 +14,12 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { useContext, useState } from "react";
 import { foodContext } from "@/context/foodProvider";
+import { Grid } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
 export default function FoodCard({ food }: any) {
-  const { image, name, createdAt, isSale, Category } = food;
+  const { image, name, createdAt, isSale, Category, _id } = food;
   const { deleteFood } = useContext(foodContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -40,7 +41,7 @@ export default function FoodCard({ food }: any) {
         textTransform: "uppercase",
       }}
     >
-      {food.status}
+      {name}
     </Label>
   );
 
@@ -77,66 +78,55 @@ export default function FoodCard({ food }: any) {
   );
 
   return (
-    <Card
-      sx={{
-        ":hover": {
-          cursor: "pointer",
-        },
-      }}
-    >
-      <Box sx={{ pt: "100%", position: "relative" }}>
-        {food.status && renderStatus}
-
-        {renderImg}
-      </Box>
-
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
-          {name}
-        </Link>
-
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
+    <Grid xs={12} sm={6} md={3}>
+      <Card>
+        <Box
+          sx={{
+            position: "relative",
+            pt: "calc(100% * 3 / 4)",
+          }}
         >
+          {renderStatus}
+        </Box>
+        <Box
+          sx={{
+            p: (theme) => theme.spacing(4, 3, 3, 3),
+          }}
+        >
+          {/* {renderDate} */}
           {renderPrice}
-          <div onClick={handleClick}>
-            <MoreVertIcon />
-          </div>
-
-          <Popover
-            id={food._id}
-            anchorEl={anchorEl}
-            open={open}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>
-              <EditOutlinedIcon />
-              Edit
-            </MenuItem>
-
-            {/* <MenuItem
-              onClick={() => {
-                handleClose();
-                deleteFood(food._id);
-              }}
-              sx={{ color: "error.main" }}
-            >
-              <DeleteForeverOutlinedIcon />
-              Delete
-            </MenuItem> */}
-          </Popover>
-        </Stack>
-      </Stack>
-    </Card>
+          <Stack direction="row" justifyContent="space-between">
+            {/* {renderDesc} */}
+            <div onClick={handleClick}>
+              <MoreVertIcon />
+            </div>
+          </Stack>
+        </Box>
+      </Card>
+      <Popover
+        anchorEl={anchorEl}
+        open={open}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        onClose={handleClose}
+      >
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            deleteFood(_id);
+          }}
+          sx={{ color: "error.main" }}
+        >
+          <DeleteForeverOutlinedIcon />
+          Delete
+        </MenuItem>
+      </Popover>
+    </Grid>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 
 import Stack from "@mui/material/Stack";
@@ -16,76 +16,55 @@ import { Button } from "@mui/material";
 import Iconify from "@/components/iconify";
 
 import FoodModal from "@/components/foodModal";
+import { catContext } from "@/context/catProvider";
+import { foodContext } from "@/context/foodProvider";
+
+import { redirect } from "next/navigation";
+import { authContext } from "@/context/authProvider";
 // ----------------------------------------------------------------------
 
 export default function FoodView() {
+  const { checkIsLogged } = useContext(authContext);
+  // const { getFoods, foods, loading } = useContext(foodContext);
+
+  useEffect(() => {
+    checkIsLogged();
+    getFoods();
+    if (!localStorage.getItem("token")) {
+      console.log("USER NOT FOUND");
+      redirect("/login");
+    }
+  }, []);
   const [open, setOpen] = useState(false);
-  const [foods, setFoods] = useState([]);
   const [file, setFile] = useState<File | null>(null);
 
-  const [newFood, setNewFood] = useState({
-    name: "",
-    description: "",
-    image: "",
-  });
+  const {
+    foods,
+    isLoading,
+    getFoods,
+    uploadImage,
+    handleFile,
+    handleFoodForm,
+  } = useContext(foodContext);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files![0]);
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setNewFood({ ...newFood, [name]: value });
+  const handleOpen = () => {
+    setOpen(true);
   };
-
-  const [openFilter, setOpenFilter] = useState(false);
-
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
+  const handleClose = () => {
+    setOpen(() => false);
   };
-
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
-
-  const createFood = async () => {
-    try {
-      const formData = new FormData();
-      formData.set("image", file!);
-      formData.set("name", newFood.name);
-      formData.set("description", newFood.description);
-
-      const {
-        data: { food },
-      } = (await axios.post("http://localhost:8080/food", formData)) as {
-        data: { food: object };
-      };
-
-      // setCategories(categories);
-      console.log("Success Add Food");
-    } catch (error: any) {
-      alert("Add Error - " + error.message);
-    }
-  };
-
-  const getFood = async () => {
-    try {
-      const {
-        data: { foods },
-      } = (await axios.get("http://localhost:8080/food")) as {
-        data: { foods: [] };
-      };
-
-      setFoods(foods);
-    } catch (error: any) {
-      alert("Get Error - " + error.message);
-    }
+  const handleSave = async () => {
+    await uploadImage();
+    handleClose();
   };
 
   useEffect(() => {
-    getFood();
-  }, [createFood]);
+    getFoods();
+  }, []);
 
   return (
     <Container>
@@ -102,9 +81,7 @@ export default function FoodView() {
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="eva:plus-fill" />}
-          onClick={() => {
-            setOpenFilter(true);
-          }}
+          onClick={handleOpen}
         >
           Шинэ хоол
         </Button>
@@ -121,20 +98,21 @@ export default function FoodView() {
         </Stack>
       </Stack>
       <Grid container spacing={3}>
-        {foods.map((product: any) => (
-          <Grid key={product.id} xs={12} sm={6} md={3}>
-            <FoodCard product={product} />
-          </Grid>
+        {foods?.map((food: any) => (
+          <FoodCard food={food} />
         ))}
       </Grid>
+
       <FoodModal
         open={open}
-        newFood={newFood}
-        handleChange={handleChange}
-        handleFileChange={handleFileChange}
-        handleSave={createFood}
-        openFilter={openFilter}
-        handleCloseFilter={handleCloseFilter}
+        // newFood={newFood}
+        handleChange={handleFoodForm}
+        handleFileChange={handleFile}
+        handleSave={handleSave}
+        // openFilter={openFilter}
+        // handleCloseFilter={handleCloseFilter}
+        handleClose={handleClose}
+        isLoading={isLoading}
       ></FoodModal>
     </Container>
   );

@@ -13,10 +13,10 @@ interface ICreateCatContext {
   categories: any;
   isLoading: boolean;
   getCategories: () => void;
-  handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleCategoryForm: (e: ChangeEvent<HTMLInputElement>) => void;
   uploadImage: () => void;
   deleteCategory: (catId: string) => void;
+  handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleCategoryForm: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 export const catContext = createContext<ICreateCatContext>({
   getCategories: () => {},
@@ -32,7 +32,7 @@ const CatProvider = ({ children }: PropsWithChildren) => {
   const { token } = useContext(authContext);
   const [categories, setCategories] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
-  let [categoryForm, setCategoryForm] = useState({
+  const [categoryForm, setCategoryForm] = useState({
     name: "",
     description: "",
     image: "",
@@ -75,6 +75,7 @@ const CatProvider = ({ children }: PropsWithChildren) => {
   const handleCategoryForm = (e: ChangeEvent<HTMLInputElement>) => {
     setCategoryForm({ ...categoryForm, [e.target.name]: e.target.value });
   };
+
   const uploadImage = async () => {
     try {
       const formData = new FormData();
