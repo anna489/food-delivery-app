@@ -58,7 +58,6 @@ export default function FoodModal({
   foodForm,
 }: any) {
   const { categories, getCategories } = React.useContext(catContext);
-  const { handleFoodForm, handleFile } = React.useContext(foodContext);
 
   return (
     <div>
@@ -76,7 +75,12 @@ export default function FoodModal({
             </MuiButton>
           </Stack>
 
-          <Input label="Name" desc="Хоолны нэрийг оруулна уу" name="name" />
+          <Input
+            label="Name"
+            desc="Хоолны нэрийг оруулна уу"
+            name="name"
+            onChange={handleChange}
+          />
           <Input
             label="Price"
             desc="Үнийн дүнг оруулна уу"
@@ -90,7 +94,11 @@ export default function FoodModal({
             onChange={handleChange}
           />
           <Stack>
-            <Input label="Discount" desc="Хямдралын хувийг оруулна уу" />
+            <Input
+              label="Discount"
+              desc="Хямдралын хувийг оруулна уу"
+              onChange={handleChange}
+            />
             <FormGroup
               sx={{
                 display: "flex",
@@ -102,6 +110,7 @@ export default function FoodModal({
                 control={<Checkbox defaultChecked />}
                 name="isSale"
                 label="Sale"
+                onChange={handleChange}
               />
             </FormGroup>
           </Stack>
@@ -115,7 +124,7 @@ export default function FoodModal({
                 id="demo-simple-select-disabled"
                 label="categry"
                 name="category"
-                // onChange={handleFoodForm}
+                onChange={handleChange}
               >
                 {categories?.map((category: any) => {
                   return (

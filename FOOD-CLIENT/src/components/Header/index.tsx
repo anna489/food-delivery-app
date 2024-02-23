@@ -23,7 +23,21 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Link from "next/link";
 import MyDrawer from "../Drawer";
 
-const pages = ["НҮҮР", "ХООЛНЫ ЦЭС", "ХҮРГЭЛТИЙН БҮС"];
+// const pages = ["НҮҮР", "ХООЛНЫ ЦЭС", "ХҮРГЭЛТИЙН БҮС"];
+const pages = [
+  {
+    name: "НҮҮР",
+    href: "/",
+  },
+  {
+    name: "ХООЛНЫ ЦЭС",
+    href: "/foodmenu",
+  },
+  {
+    name: "ХҮРГЭЛТИЙН БҮС",
+    href: "/deliveryregion",
+  },
+];
 const settings = ["Профайл", "Тохиргоо", , "Гарах"];
 
 export const Header = () => {
@@ -51,15 +65,16 @@ export const Header = () => {
   const handleCloseDrawer = () => setDrawer(false);
 
   return (
-    <AppBar
-      position="static"
-      sx={{
-        background: "white",
-        boxShadow: "none",
-        borderBottom: "1px lightgrey solid",
-        padding: "10px",
-      }}
-    >
+    <Container>
+      {/* <AppBar
+        position="static"
+        sx={{
+          background: "white",
+          boxShadow: "none",
+          borderBottom: "1px lightgrey solid",
+          padding: "10px",
+        }}
+      > */}
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ alignItems: "center", gap: "20px" }}>
           <PineconeLogo />
@@ -91,8 +106,8 @@ export const Header = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -101,9 +116,9 @@ export const Header = () => {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Link
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
-                href={"/"}
+                href={page.href}
                 style={{
                   color: "black",
                   textDecoration: "none",
@@ -113,7 +128,7 @@ export const Header = () => {
                   padding: "8px 16px",
                 }}
               >
-                {page}
+                {page.name}
               </Link>
             ))}
           </Box>
@@ -136,7 +151,12 @@ export const Header = () => {
           </Box>
 
           <Box
-            sx={{ display: "flex", alignItems: "center", gap: 2, flexGrow: 0 }}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+              flexGrow: 0,
+            }}
           >
             <Box sx={{ px: 2 }}>
               <IconButton onClick={handleOpenDrawer} color="inherit">
@@ -202,6 +222,7 @@ export const Header = () => {
           </Box>
         </Toolbar>
       </Container>
-    </AppBar>
+      {/* </AppBar> */}
+    </Container>
   );
 };

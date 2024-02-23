@@ -10,6 +10,7 @@ export const createFood = async (
 ) => {
   try {
     const newFood = req.body;
+    console.log("CREATE FOODIIN BODY!", req.body);
     const food = await Food.create(newFood);
     res.status(201).json({ message: "Created Food successfully", food });
   } catch (error) {
@@ -38,14 +39,14 @@ export const getAllFood = async (
   next: NextFunction
 ) => {
   try {
-    const { foodId } = req.params;
     const foods = await Food.find();
 
-    res.status(200).json({ message: `${foodId}-found all  foods `, foods });
+    res.status(200).json({ message: `found all  foods `, data: { foods } });
   } catch (error) {
     next(error);
   }
 };
+
 export const updateFood = async (
   req: Request,
   res: Response,

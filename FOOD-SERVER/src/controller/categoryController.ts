@@ -81,13 +81,13 @@ export const deleteCategory = async (
 ) => {
   try {
     const { categoryId } = req.params;
-    const deleteCatrogry = await Category.findByIdAndDelete(categoryId);
-    if (!deleteCatrogry) {
+    const deleteCategory = await Category.findByIdAndDelete(categoryId);
+    if (!deleteCategory) {
       throw new MyError(`${categoryId}-hereglegch alga`, 400);
     }
     res.status(200).json({
       message: `${categoryId}-deleted this  category `,
-      deleteCatrogry,
+      deleteCategory,
     });
   } catch (error) {
     next(error);

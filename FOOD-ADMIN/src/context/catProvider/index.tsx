@@ -108,6 +108,7 @@ const CatProvider = ({ children }: PropsWithChildren) => {
       deleteCategoryFromArray(catId);
     } catch (error) {}
   };
+
   return (
     <catContext.Provider
       value={{

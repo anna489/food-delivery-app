@@ -8,51 +8,35 @@ import React, {
 } from "react";
 
 interface ICreateFoodContext {
-  foods: string[];
   getFoods: () => void;
-  isLoading: boolean;
-  food: any;
-  openOrderModal: (food: any) => void;
-  openOrder: boolean;
-  setOpenOrder: any;
+  foods: any;
 }
 
-export const foodContext = createContext<ICreateFoodContext>(
-  {} as ICreateFoodContext
-);
+export const foodContext = createContext<ICreateFoodContext>({
+  getFoods: () => {},
+  foods: [],
+});
 
 const FoodProvider = ({ children }: PropsWithChildren) => {
-  const [foods, setFoods] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [foods, setFoods] = useState<any>([]);
+
   const getFoods = async () => {
     try {
-      const foodData = await axios
-        .get("http://localhost:8080/food")
-        .then((res) => res.data);
-      console.log("FOODS!!!", foodData.foods);
-      setFoods(foodData.foods);
-      setIsLoading(false);
+      const {
+        data: { foods },
+      } = await axios.get("http://localhost:8080/food").then((res) => res.data);
+      setFoods(foods);
+      console.log("GET FOODS SUCCESS", foods);
     } catch (error) {
-      console.log("ERROR IN GET FOODS", error);
+      console.log("ERROR IN FOODS FUNCTION", error);
     }
-  };
-  const [food, setFood] = useState({});
-  const [openOrder, setOpenOrder] = useState<boolean>(false);
-  const openOrderModal = (food: any) => {
-    setFood(food);
-    setOpenOrder(true);
   };
 
   return (
     <foodContext.Provider
       value={{
-        foods,
         getFoods,
-        isLoading,
-        openOrderModal,
-        food,
-        openOrder,
-        setOpenOrder,
+        foods,
       }}
     >
       {children}

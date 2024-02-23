@@ -15,11 +15,13 @@ import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined
 import { useContext, useState } from "react";
 import { foodContext } from "@/context/foodProvider";
 import { Grid } from "@mui/material";
+import { fDate } from "@/utils/format-time";
 
 // ----------------------------------------------------------------------
 
 export default function FoodCard({ food }: any) {
-  const { image, name, createdAt, isSale, Category, _id } = food;
+  const { image, name, createdAt, isSale, _id, description } = food;
+  console.log("FOOD", food);
   const { deleteFood } = useContext(foodContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -29,23 +31,39 @@ export default function FoodCard({ food }: any) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const renderStatus = (
-    <Label
-      variant="filled"
-      color={(food.status === "sale" && "error") || "info"}
+  const renderTitle = (
+    <Link
+      color="inherit"
+      variant="subtitle2"
+      underline="hover"
       sx={{
-        zIndex: 9,
-        top: 16,
-        right: 16,
-        position: "absolute",
-        textTransform: "uppercase",
+        overflow: "hidden",
+        WebkitLineClamp: 2,
+        display: "-webkit-box",
+        WebkitBoxOrient: "vertical",
+        fontSize: "25px",
       }}
     >
       {name}
-    </Label>
+    </Link>
+  );
+  const renderDesc = (
+    <Typography
+      color="inherit"
+      variant="body2"
+      sx={{
+        height: 44,
+        overflow: "hidden",
+        WebkitLineClamp: 2,
+        display: "-webkit-box",
+        WebkitBoxOrient: "vertical",
+      }}
+    >
+      {description}
+    </Typography>
   );
 
-  const renderImg = (
+  const renderCover = (
     <Box
       component="img"
       alt={name}
@@ -60,13 +78,25 @@ export default function FoodCard({ food }: any) {
     />
   );
 
+  const renderDate = (
+    <Typography
+      variant="caption"
+      component="div"
+      sx={{
+        mb: 2,
+        color: "text.disabled",
+      }}
+    >
+      {fDate(createdAt)}
+    </Typography>
+  );
   const renderPrice = (
     <Typography variant="subtitle1">
       <Typography
         component="span"
         variant="body1"
         sx={{
-          color: "text.disabled",
+          color: "red",
           textDecoration: "line-through",
         }}
       >
@@ -78,7 +108,7 @@ export default function FoodCard({ food }: any) {
   );
 
   return (
-    <Grid xs={12} sm={6} md={3}>
+    <Grid xs={12} sm={6} md={3} sx={{ width: "300px" }}>
       <Card>
         <Box
           sx={{
@@ -86,17 +116,19 @@ export default function FoodCard({ food }: any) {
             pt: "calc(100% * 3 / 4)",
           }}
         >
-          {renderStatus}
+          {renderCover}
+          {renderPrice}
         </Box>
         <Box
           sx={{
             p: (theme) => theme.spacing(4, 3, 3, 3),
           }}
         >
-          {/* {renderDate} */}
-          {renderPrice}
+          {renderDate}
+          {renderTitle}
           <Stack direction="row" justifyContent="space-between">
-            {/* {renderDesc} */}
+            {renderDesc}
+
             <div onClick={handleClick}>
               <MoreVertIcon />
             </div>

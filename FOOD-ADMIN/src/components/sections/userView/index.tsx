@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { sample } from "lodash";
 import { faker } from "@faker-js/faker";
 import Card from "@mui/material/Card";
@@ -22,50 +22,17 @@ import UserTableHead from "./user-table-head";
 import TableEmptyRows from "./table-empty-rows";
 import UserTableToolbar from "./user-table-toolbar";
 import { emptyRows, applyFilter, getComparator } from "./functions";
-import { userContext } from "@/context/userProvider";
-import { authContext } from "@/context/authProvider";
-import { redirect } from "next/navigation";
+
+import { Key } from "@mui/icons-material";
+import { UserModal } from "@/components/userModal";
+import { UserContext } from "@/context/userProvider";
 
 // ----------------------------------------------------------------------
-
-// ----------------------------------------------------------------------
-
-export const users = [...Array(24)].map((_, index) => ({
-  id: faker.string.uuid(),
-  avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
-  name: faker.person.fullName(),
-  company: faker.company.name(),
-  isVerified: faker.datatype.boolean(),
-  status: sample(["active", "banned"]),
-  role: sample([
-    "Leader",
-    "Hr Manager",
-    "UI Designer",
-    "UX Designer",
-    "UI/UX Designer",
-    "Project Manager",
-    "Backend Developer",
-    "Full Stack Designer",
-    "Front End Developer",
-    "Full Stack Developer",
-  ]),
-}));
 
 // ----------------------------------------------------------------------
 
 export default function UserView() {
-  const { checkIsLogged } = useContext(authContext);
-  useEffect(() => {
-    checkIsLogged();
-    if (!localStorage.getItem("token")) {
-      console.log("USER NOT FOUND");
-      redirect("/login");
-    }
-  }, []);
-  const { getCustomers, customers } = useContext(userContext);
-  useEffect(() => {
-    getCustomers();
-  }, []);
+  const { users, handleChange, createUser, loading } = useContext(UserContext);
 
   const [page, setPage] = useState(0);
 
@@ -79,6 +46,15 @@ export default function UserView() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(() => true);
+  };
+  const handleClose = () => {
+    setOpen(() => false);
+  };
+
   const handleSort = (event: any, id: any) => {
     const isAsc = orderBy === id && order === "asc";
     if (id !== "") {
@@ -89,7 +65,7 @@ export default function UserView() {
 
   const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.name);
+      const newSelecteds = users.map((user) => user.name);
       setSelected(newSelecteds);
       return;
     }
@@ -129,7 +105,7 @@ export default function UserView() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: customers,
+    inputData: users,
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -145,6 +121,15 @@ export default function UserView() {
         mb={5}
       >
         <Typography variant="h4">Хэрэглэгчид</Typography>
+
+        <Button
+          variant="contained"
+          color="inherit"
+          onClick={() => handleOpen()}
+          startIcon={<Iconify icon="eva:plus-fill" />}
+        >
+          Шинэ хэрэглэгч
+        </Button>
       </Stack>
 
       <Card sx={{}}>
@@ -166,36 +151,25 @@ export default function UserView() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: "name", label: "Нэр" },
-                  { id: "company", label: "Имэйл" },
+                  { id: "email", label: "Имэйл" },
                   { id: "role", label: "Эрх" },
-                  { id: "action", label: "Үйлдэл" },
+                  { id: "isVerified", label: "Баталгаажсан", align: "center" },
+                  { id: "status", label: "Төлөв" },
+                  { id: "" },
                 ]}
               />
               <TableBody>
-                {/* {customers ? (
-                  customers?.map((customer: any) => {
-                    return (
-                      <UserTableRow
-                        key={customer._id}
-                        name={customer.name}
-                        role={customer.role}
-                        company={customer.email}
-                      />
-                    );
-                  })
-                ) : (
-                  <div></div>
-                )} */}
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row: any) => (
                     <UserTableRow
-                      key={row.id}
+                      key={row._id}
                       name={row.name}
                       role={row.role}
                       status={row.status}
                       email={row.email}
                       avatarUrl={row.avatarUrl}
+                      isVerified={row.isVerified}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event: any) => handleClick(event, row.name)}
                     />
@@ -203,7 +177,7 @@ export default function UserView() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, customers.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, users.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -215,13 +189,22 @@ export default function UserView() {
         <TablePagination
           page={page}
           component="div"
-          count={customers.length}
+          count={users.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
+      {open && (
+        <UserModal
+          open={open}
+          handleClose={handleClose}
+          handleChange={handleChange}
+          createUser={createUser}
+          loading={loading}
+        />
+      )}
     </Container>
   );
 }

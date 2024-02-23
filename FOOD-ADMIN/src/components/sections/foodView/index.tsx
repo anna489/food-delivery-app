@@ -97,7 +97,7 @@ export default function FoodView() {
           <FoodSort />
         </Stack>
       </Stack>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} sx={{ gap: "20px" }}>
         {foods?.map((food: any) => (
           <FoodCard food={food} />
         ))}

@@ -7,6 +7,7 @@ import React, {
   PropsWithChildren,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { authContext } from "../authProvider";
@@ -15,6 +16,7 @@ interface ICreateFoodContext {
   foods: any;
   isLoading: boolean;
   getFoods: () => void;
+
   uploadImage: () => void;
   deleteFood: (foodId: string) => void;
   handleFile: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -34,11 +36,12 @@ export const foodContext = createContext<ICreateFoodContext>({
 const FoodProvider = ({ children }: PropsWithChildren) => {
   const { token } = useContext(authContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const [foods, setFoods] = useState<any>();
   const [foodForm, setFoodForm] = useState<any>({
     name: "",
-    price: 0,
+    price: "",
     description: "",
     image: "",
     category: "",
@@ -47,9 +50,9 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
   const getFoods = async () => {
     try {
       setIsLoading(true);
-      const { foods } = await axios
-        .get("http://localhost:8080/food")
-        .then((res) => res.data);
+      const {
+        data: { foods },
+      } = await axios.get("http://localhost:8080/food").then((res) => res.data);
       setFoods(foods);
       console.log("GET FOODS SUCCESS", foods);
     } catch (error) {
@@ -60,6 +63,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
   };
 
   const createFood = async () => {
+    console.log("FOOD FORM", foodForm);
     try {
       const { data } = await axios.post("http://localhost:8080/food", {
         name: foodForm.name,
@@ -71,7 +75,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
       console.log("create food data", data);
       setFoods([...foods, data.food]);
     } catch (error) {
-      console.log("ERROR IN FOOD FUNCTION");
+      console.log("ERROR IN FOOD FUNCTION", error);
     }
   };
 

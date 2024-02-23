@@ -3,29 +3,31 @@ import axios from "axios";
 import React, { PropsWithChildren, createContext, useState } from "react";
 
 interface ICreateCatContext {
+  categories: any;
   getCategories: () => void;
-  categories: ICategory[];
 }
 interface ICategory {
   _id: string;
   name: string;
   description: string;
 }
-export const catContext = createContext<ICreateCatContext>(
-  {} as ICreateCatContext
-);
+export const catContext = createContext<ICreateCatContext>({
+  categories: [],
+  getCategories: () => {},
+});
+
 const CatProvider = ({ children }: PropsWithChildren) => {
-  const [categories, setCatogories] = useState([]);
+  const [categories, setCategories] = useState<any>([]);
 
   const getCategories = async () => {
     try {
-      const categoryData = await axios
+      const { categories } = await axios
         .get("http://localhost:8080/category")
         .then((res) => res.data);
-      console.log("CATEGORIES", categoryData.categorys);
-      setCatogories(categoryData.categorys);
+      setCategories(categories);
+      console.log("GET CATEGORIES SUCCESS", categories);
     } catch (error) {
-      console.log("ERROR IN GET CATEGORIES", error);
+      console.log("ERROR IN GETCATEGORIES FUNCTION", error);
     }
   };
   return (
