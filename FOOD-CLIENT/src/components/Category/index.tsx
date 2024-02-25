@@ -9,6 +9,7 @@ export const Category = () => {
   useEffect(() => {
     getCategories();
   }, []);
+
   return (
     <Stack sx={{ display: "flex", justifyContent: "center" }}>
       {categories?.map((category: any) => (
