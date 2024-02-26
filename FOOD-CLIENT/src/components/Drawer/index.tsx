@@ -1,8 +1,10 @@
 import { Box, Button, Divider, Drawer, Typography } from "@mui/material";
 import { FaChevronLeft } from "react-icons/fa";
 
-import React from "react";
-import { DrawerCard } from "../DrawerCard";
+import React, { useContext, useEffect } from "react";
+import { FoodBasket } from "../FoodBasket";
+import { foodContext } from "@/context/foodProvider";
+import { BasketContext } from "@/context/basketProvider";
 
 interface IDrawerProps {
   open: boolean;
@@ -10,6 +12,13 @@ interface IDrawerProps {
 }
 
 const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
+  const { getFoods, foods } = useContext(foodContext);
+  const { baskets, loading, deleteBasket } = useContext(BasketContext);
+
+  useEffect(() => {
+    getFoods();
+  }, []);
+
   return (
     <>
       <React.Fragment>
@@ -26,7 +35,8 @@ const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
               <Typography></Typography>
             </Box>
             <Divider />
-            <DrawerCard />
+
+            <FoodBasket foods={baskets} />
           </Box>
         </Drawer>
       </React.Fragment>

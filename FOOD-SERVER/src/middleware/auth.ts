@@ -10,8 +10,9 @@ export const authenticate = async (
   next: NextFunction
 ) => {
   try {
+    console.log("REQHE", req.headers);
     if (!req.headers.authorization) {
-      throw new MyError("Token байхгүй байна. заавал token илгээх ёстой", 400);
+      throw new MyError("Token байхгүй байна.Заавал token илгээх ёстой", 400);
     }
     const token = req.headers.authorization.split(" ")[1];
     console.log("TOKEN", token);

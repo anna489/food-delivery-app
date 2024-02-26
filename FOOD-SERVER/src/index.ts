@@ -12,6 +12,7 @@ import errorHandler from "./middleware/errorHandler";
 import categoryRoute from "./router/categoryRoute";
 import foodRoute from "./router/foodRoute";
 import uploadRoute from "./router/uploadRoute";
+import basket from "./router/basketRoute";
 
 const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI as string;
@@ -28,6 +29,7 @@ app.use("/verify", verifyRoute);
 app.use("/category", categoryRoute);
 app.use("/food", foodRoute);
 app.use("/upload", uploadRoute);
+app.use("/basket", basket);
 
 app.use(errorHandler);
 

@@ -12,7 +12,8 @@ import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
 import FoodCard from "./food-card";
 import { foodContext } from "@/context/foodProvider";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import CardModals from "../CardModals";
+import CardModals from "../FoodModal";
+
 const CategoryCard = ({ category }: any) => {
   const { foods, getFoods } = useContext(foodContext);
 
@@ -53,9 +54,7 @@ const CategoryCard = ({ category }: any) => {
           ?.filter((food: any) => food.category === category._id)
           ?.map((food: any) => (
             <Box key={food.category._id}>
-              <Link>
-                <FoodCard food={food} />
-              </Link>
+              <FoodCard food={food} />
             </Box>
           ))}
       </Grid>

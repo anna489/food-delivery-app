@@ -1,38 +1,33 @@
-import { Box, Card, Grid, Link, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardActionArea,
+  Grid,
+  Link,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React from "react";
+import FoodModal from "../FoodModal";
 
 const FoodCard = ({ food }: any) => {
-  const { image, name, createdAt, isSale, _id, description } = food;
+  const { image, name, isSale, price } = food;
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const renderTitle = (
     <Link
-      color="inherit"
-      variant="subtitle2"
-      underline="hover"
+      underline="none"
       sx={{
-        overflow: "hidden",
-        WebkitLineClamp: 2,
         display: "-webkit-box",
-        WebkitBoxOrient: "vertical",
-        fontSize: "25px",
+        fontWeight: "bold",
+        fontSize: "30px",
+        color: "black",
       }}
     >
       {name}
     </Link>
-  );
-  const renderDesc = (
-    <Typography
-      color="inherit"
-      variant="body2"
-      sx={{
-        height: 44,
-        overflow: "hidden",
-        WebkitLineClamp: 2,
-        display: "-webkit-box",
-        WebkitBoxOrient: "vertical",
-      }}
-    >
-      {description}
-    </Typography>
   );
 
   const renderCover = (
@@ -46,22 +41,11 @@ const FoodCard = ({ food }: any) => {
         height: 1,
         objectFit: "cover",
         position: "absolute",
+        borderRadius: "20px",
       }}
     />
   );
 
-  const renderDate = (
-    <Typography
-      variant="caption"
-      component="div"
-      sx={{
-        mb: 2,
-        color: "text.disabled",
-      }}
-    >
-      {createdAt}
-    </Typography>
-  );
   const renderPrice = (
     <Typography variant="subtitle1">
       <Typography
@@ -78,30 +62,48 @@ const FoodCard = ({ food }: any) => {
       {isSale}
     </Typography>
   );
+
+  const renderCost = (
+    <Typography
+      sx={{
+        color: "#18BA51",
+        fontSize: "23px",
+        fontWeight: 600,
+      }}
+    >
+      {price}₮
+    </Typography>
+  );
   return (
     <Grid xs={12} sm={6} md={3}>
-      <Card sx={{ width: "350px" }}>
-        <Box
-          sx={{
-            position: "relative",
-            pt: "calc(100% * 3 / 4)",
-          }}
-        >
-          {renderCover}
-          {renderPrice}
-        </Box>
-        <Box
-          sx={{
-            p: (theme) => theme.spacing(4, 3, 3, 3),
-          }}
-        >
-          {renderDate}
-          {renderTitle}
-          <Stack direction="row" justifyContent="space-between">
-            {renderDesc}
-          </Stack>
-        </Box>
+      <Card
+        sx={{
+          width: "350px",
+          boxShadow: "unset",
+          borderRadius: "20px",
+        }}
+        onClick={() => handleOpen()}
+      >
+        <CardActionArea>
+          <Box
+            sx={{
+              position: "relative",
+              pt: "calc(100% * 3 / 4)",
+            }}
+          >
+            {renderCover}
+          </Box>
+          <Box
+            sx={{
+              p: (theme) => theme.spacing(4, 3, 3, 3),
+            }}
+          >
+            {renderTitle}
+            <Stack>{renderCost}</Stack>
+          </Box>
+        </CardActionArea>
       </Card>
+      {open && <FoodModal open={open} handleClose={handleClose} food={food} />}
     </Grid>
   );
 };

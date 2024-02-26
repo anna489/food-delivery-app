@@ -66,15 +66,6 @@ export const Header = () => {
 
   return (
     <Container>
-      {/* <AppBar
-        position="static"
-        sx={{
-          background: "white",
-          boxShadow: "none",
-          borderBottom: "1px lightgrey solid",
-          padding: "10px",
-        }}
-      > */}
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ alignItems: "center", gap: "20px" }}>
           <PineconeLogo />
@@ -222,7 +213,6 @@ export const Header = () => {
           </Box>
         </Toolbar>
       </Container>
-      {/* </AppBar> */}
     </Container>
   );
 };
