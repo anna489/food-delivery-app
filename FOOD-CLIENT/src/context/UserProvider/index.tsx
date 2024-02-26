@@ -37,6 +37,8 @@ export const UserContext = createContext<IUserContext>({} as IUserContext);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
+  const [user, setUser] = useState<object | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [userForm, setUserForm] = useState<IUser>({
     name: "",
@@ -61,9 +63,10 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
         userEmail: email,
         userPassword: password,
       });
-      console.log("newterlee", token, user);
-      localStorage.setItem("token", JSON.stringify(token));
+      // console.log("newterlee", token, user);
+      localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
+
       await Swal.fire({
         position: "top-end",
         icon: "success",
@@ -79,12 +82,10 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const [user, setUser] = useState<object | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
+
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
@@ -94,23 +95,10 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       }
     }
     if (storedToken) {
-      const isValidJSON = /^[\],:{}\s]*$/.test(
-        storedToken
-          .replace(/\\["\\\/bfnrtu]/g, "@")
-          .replace(
-            /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
-            "]"
-          )
-      );
-      if (isValidJSON) {
-        try {
-          const parsedToken = JSON.parse(storedToken);
-          setToken(parsedToken);
-        } catch (error) {
-          console.error("Failed to parse token :", error);
-        }
-      } else {
-        // console.error("Invalid token data:", storedToken);
+      try {
+        setToken(storedToken);
+      } catch (error) {
+        console.error("Failed to parse user data:", error);
       }
     }
   }, []);

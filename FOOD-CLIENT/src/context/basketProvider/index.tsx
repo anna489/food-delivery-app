@@ -17,6 +17,7 @@ interface IBasket {
     _id: string;
     description: string;
     price: number;
+    id: string;
   };
   count: number;
 }
@@ -35,20 +36,22 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   const [loading, setLoading] = useState(false);
   const [baskets, setBaskets] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [drawerFood, setDrawerFood] = useState<any>([]);
 
   const getBaskets = async () => {
     try {
-      if (token) {
-        const {
-          data: { basket },
-        } = await axios.get("http://localhost:8080/basket", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+      console.log("TOKEN IN BASKET:", token);
 
-        setBaskets(basket.foods);
-      }
+      const {
+        data: { basket },
+      } = await axios.get("http://localhost:8080/basket", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("CLIENT BASKET", basket);
+      setBaskets(basket.foods);
+      console.log("GET BASKET SUCCESS");
     } catch (error: any) {
-      alert("Error" + error.message);
+      console.log("ERROR IN GETBATKET FUNCTION", error);
     }
   };
 
@@ -63,6 +66,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
           foodId: food._id,
           count: count,
         });
+        console.log("BASKET DATA", basket);
         setLoading(false);
         setRefresh(!refresh);
       }
@@ -71,20 +75,27 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const deleteBasket = async (value: any) => {
+  const deleteFoodFromArray = (id: string) => {
+    setDrawerFood((oldFoods: any) => {
+      return oldFoods.filter((obj: any) => obj._id !== id);
+    });
+  };
+
+  const deleteBasket = async (id: any) => {
     try {
       setLoading(true);
 
       if (user) {
         const {
           data: { basket },
-        } = await axios.delete("http://localhost:8080/basket" + value, {
+        } = await axios.delete(`http://localhost:8080/basket/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
         setLoading(false);
+        deleteFoodFromArray(id);
         setRefresh(!refresh);
       }
     } catch (error: any) {

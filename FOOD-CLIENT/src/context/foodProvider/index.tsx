@@ -26,7 +26,7 @@ const FoodProvider = ({ children }: PropsWithChildren) => {
         data: { foods },
       } = await axios.get("http://localhost:8080/food").then((res) => res.data);
       setFoods(foods);
-      console.log("GET FOODS SUCCESS");
+      console.log("GET FOODS SUCCESS", foods);
     } catch (error) {
       console.log("ERROR IN FOODS FUNCTION", error);
     }

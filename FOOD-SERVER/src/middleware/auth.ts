@@ -23,6 +23,7 @@ export const authenticate = async (
     const { id } = jwt.verify(token!, process.env.JWT_PRIVATE_KEY!) as {
       id: string;
     };
+    console.log("ID :", id);
     const findUser = await User.findById(id);
     req.user = findUser;
     next();

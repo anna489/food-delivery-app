@@ -4,15 +4,14 @@ import MyError from "../utils/myError";
 import { IReq } from "../utils/interface";
 
 export const createBasket = async (
-  req: Request,
+  req: IReq,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const newBasket = req.body;
-    console.log("NEW BASKET===>", newBasket);
     await Basket.create(newBasket);
-    res.status(201).json({ message: "Basket created successfully" });
+    return res.status(201).json({ message: "Basket created successfully" });
   } catch (error) {
     next(error);
   }
@@ -26,15 +25,14 @@ export const getBasket = async (
     const basket = await Basket.findOne({
       user: req.user._id,
     }).populate("foods.food");
-    console.log("REQ.USER_ID====>", req.user._id);
-    console.log("BASKET====>", basket);
+
     if (!basket) {
       throw new MyError(
         `Cannot found ${req.user._id} ==> id from basket `,
         400
       );
     }
-    res
+    return res
       .status(200)
       .json({ message: `Found this ${req.user._id} ==> from basket `, basket });
   } catch (error) {
@@ -50,7 +48,7 @@ export const updateBasket = async (
   try {
     const { userId, foodId, count } = req.body;
     const basket = await Basket.findOne({ user: userId });
-    console.log("UPDATA BASKET USERID===>", userId);
+    // console.log("UPDATA BASKET USERID===>", userId);
     basket?.foods.push({ food: foodId, count: count });
     await basket?.save();
     res.status(200).json({ message: "successfully updated basket" });

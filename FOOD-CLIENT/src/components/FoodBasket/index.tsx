@@ -1,6 +1,13 @@
 import { BasketContext } from "@/context/basketProvider";
 import { Add, Close, Remove } from "@mui/icons-material";
-import { Grid, Typography, Button as MuiButton, Box } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Button as MuiButton,
+  Box,
+  Stack,
+  Button,
+} from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 
 type Props = {
@@ -12,69 +19,72 @@ type Props = {
   count: number;
 };
 
-export const FoodBasket = ({ foods }: any) => {
+export const FoodBasket = ({ baskets }: any) => {
   const { deleteBasket } = useContext(BasketContext);
   const [count, setCount] = useState();
 
-  const handleDelete = (value: any) => {
-    deleteBasket(value);
+  const handleDelete = (id: any) => {
+    deleteBasket(id);
   };
 
   return (
     <>
-      {foods.map((food: any) => (
-        <Grid container key={food._id} p={2} py={6}>
+      {baskets.map((basket: any) => (
+        <Grid container key={basket._id} p={2} py={6}>
           <Grid item xs={6}>
             <img
               alt="basketFood img"
               width={250}
               height={170}
-              style={{}}
-              src={food.food.image}
+              style={{ borderRadius: "10px" }}
+              src={basket.food.image}
             />
           </Grid>
+
           <Grid item xs={6}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                }}
-              >
-                <Typography variant="h5" fontWeight={600} component="h2">
-                  {food.food.name}
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box>
+                <Typography sx={{ fontSize: "28px" }} fontWeight={600}>
+                  {basket.food.name}
                 </Typography>
 
                 <Typography
-                  variant="h6"
-                  fontWeight={500}
+                  fontWeight={600}
                   py={2}
-                  sx={{ color: "#18BA51" }}
+                  sx={{ color: "#18BA51", fontSize: "18px", display: "flex" }}
                 >
-                  {food.food.price} * {food.count} ={" "}
-                  {food.food.price * food.count}₮
+                  {basket.food.price} * {basket.count}
                 </Typography>
-              </div>
-              <MuiButton onClick={() => handleDelete(food.food._id)}>
+              </Box>
+              <MuiButton
+                sx={{ height: "20px", width: "20px", color: "red" }}
+                onClick={() => handleDelete(basket.food._id)}
+              >
                 <Close />
               </MuiButton>
-            </div>
-
-            <Typography sx={{ display: "flex", textAlign: "left" }}>
-              {food.food.description}
-            </Typography>
-            <Box display={"flex"} alignItems={"center"}>
-              <Typography fontWeight={600}>Count : </Typography>
-
-              <Typography>{food.count}</Typography>
             </Box>
+
+            <Typography
+              sx={{
+                display: "flex",
+                padding: "5px",
+                textAlign: "left",
+                color: "#767676",
+                bgcolor: "#F6F6F6",
+                fontWeight: 600,
+              }}
+            >
+              {basket.food.description}
+            </Typography>
+
+            <Typography sx={{ marginTop: "10px", fontWeight: 600 }}>
+              Нийт мөнгөн дүн:
+              <span
+                style={{ color: "red", paddingLeft: "10px", fontWeight: 600 }}
+              >
+                {basket.food.price * basket.count} ₮
+              </span>
+            </Typography>
           </Grid>
         </Grid>
       ))}

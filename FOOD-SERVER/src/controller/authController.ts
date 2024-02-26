@@ -53,9 +53,12 @@ export const login = async (
       {
         id: user._id,
       },
-      process.env.JWT_PRIVATE_KEY as string,
+
+      process.env.JWT_PRIVATE_KEY!,
       { expiresIn: process.env.JWT_EXPIRE_IN }
     );
+
+    console.log("AUTH TOKEN ===>", token);
 
     const { password, ...otherParams } = user;
 

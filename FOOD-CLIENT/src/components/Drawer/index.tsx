@@ -13,7 +13,7 @@ interface IDrawerProps {
 
 const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
   const { getFoods, foods } = useContext(foodContext);
-  const { baskets, loading, deleteBasket } = useContext(BasketContext);
+  const { baskets } = useContext(BasketContext);
 
   useEffect(() => {
     getFoods();
@@ -35,8 +35,16 @@ const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
               <Typography></Typography>
             </Box>
             <Divider />
-
-            <FoodBasket foods={baskets} />
+            <FoodBasket baskets={baskets} />
+          </Box>
+          <Box
+            sx={{
+              position: "sticky",
+              bottom: "0",
+            }}
+          >
+            <Button>edrfghj</Button>
+            wertgyu
           </Box>
         </Drawer>
       </React.Fragment>

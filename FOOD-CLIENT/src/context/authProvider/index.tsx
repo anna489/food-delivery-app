@@ -66,7 +66,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   const login = async (email: string, password: string) => {
     try {
       const data = await axios
-        .post("http://localhost:8080/auth/signin", {
+        .post("http://localhost:8080/signin", {
           email: email,
           upassword: password,
         })
@@ -84,7 +84,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   const signup = async (name: string, email: string, password: string) => {
     try {
       const data = await axios
-        .post("http://localhost:8080/auth/signup", {
+        .post("http://localhost:8080/signup", {
           name: name,
           email: email,
           password: password,
@@ -95,13 +95,14 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       localStorage.setItem("token", data.token);
       console.log("SIGNUP SUCCESS!!!", data);
       authLogged();
-      router.push("/");
+      router.push("/login");
     } catch (error) {
       console.log("ERROR IN SIGNUP FUNCTION", error);
     }
   };
   const [user, setUser] = useState("");
   const [token, setToken] = useState("");
+
   const authLogged = () => {
     if (localStorage.getItem("token")) {
       setUser(JSON.parse(localStorage.getItem("user")!));
@@ -112,6 +113,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     authLogged();
   }, []);
+
   const logout = () => {
     setIsLoggingOut(true);
     localStorage.removeItem("user");
