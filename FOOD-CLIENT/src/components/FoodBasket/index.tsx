@@ -31,7 +31,14 @@ export const FoodBasket = ({ baskets }: any) => {
     <>
       {baskets.map((basket: any) => (
         <Grid container key={basket._id} p={2} py={6}>
-          <Grid item xs={6}>
+          <Grid
+            item
+            xs={6}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <img
               alt="basketFood img"
               width={250}

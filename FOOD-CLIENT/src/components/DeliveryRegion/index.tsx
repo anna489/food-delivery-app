@@ -7,9 +7,11 @@ import {
   Container,
   FormControlLabel,
   Grid,
+  List,
   Select,
   Stack,
   TextField,
+  Toolbar,
   Typography,
 } from "@mui/material";
 
@@ -236,12 +238,13 @@ const DeliveryRegion = () => {
         </Box>
         <Card sx={{ padding: "30px", height: "550px", marginTop: 5 }}>
           <FoodBasket baskets={baskets} />
+
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-around",
               position: "sticky",
-              bottom: 0,
+              padding: "20px",
             }}
           >
             <Typography sx={{ fontWeight: 600 }}>
