@@ -5,6 +5,7 @@ import React, { useContext, useEffect } from "react";
 import { FoodBasket } from "../FoodBasket";
 import { foodContext } from "@/context/foodProvider";
 import { BasketContext } from "@/context/basketProvider";
+import { ColorButton } from "@/theme/theme";
 
 interface IDrawerProps {
   open: boolean;
@@ -43,8 +44,9 @@ const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
               bottom: "0",
             }}
           >
-            <Button>edrfghj</Button>
-            wertgyu
+            <ColorButton variant="contained" href="deliveryregion">
+              ЗАХИАЛАХ
+            </ColorButton>
           </Box>
         </Drawer>
       </React.Fragment>

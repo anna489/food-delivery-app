@@ -1,5 +1,5 @@
 import React from "react";
-import DeliveryRegion from "@/components/pages/DeliveryRegion";
+import DeliveryRegion from "@/components/DeliveryRegion";
 
 const Delivery = () => {
   return (

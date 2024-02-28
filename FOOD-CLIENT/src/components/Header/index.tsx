@@ -22,8 +22,8 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 import Link from "next/link";
 import MyDrawer from "../Drawer";
+import { ColorLink } from "@/theme/theme";
 
-// const pages = ["НҮҮР", "ХООЛНЫ ЦЭС", "ХҮРГЭЛТИЙН БҮС"];
 const pages = [
   {
     name: "НҮҮР",
@@ -66,7 +66,7 @@ export const Header = () => {
 
   return (
     <Container>
-      <Container maxWidth="xl">
+      <Box maxWidth="xl">
         <Toolbar disableGutters sx={{ alignItems: "center", gap: "20px" }}>
           <PineconeLogo />
 
@@ -97,94 +97,43 @@ export const Header = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page.name}</Typography>
-                </MenuItem>
+                <ColorLink
+                  key={page.name}
+                  style={{ textDecoration: "none" }}
+                  onClick={handleCloseNavMenu}
+                  href={page.href}
+                >
+                  {page.name}
+                </ColorLink>
               ))}
             </Menu>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Link
+              <ColorLink
                 key={page.name}
                 onClick={handleCloseNavMenu}
                 href={page.href}
                 style={{
-                  color: "black",
                   textDecoration: "none",
                   margin: "auto 8px",
-                  fontSize: "1rem",
-                  fontWeight: 700,
                   padding: "8px 16px",
                 }}
               >
                 {page.name}
-              </Link>
+              </ColorLink>
             ))}
           </Box>
 
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              alignItems: "center",
-              position: "relative",
-            }}
-          >
-            <SearchOutlinedIcon
-              fontSize="medium"
-              sx={{ position: "absolute", left: 12 }}
-            />
-            <OutlinedInput
-              placeholder="Search"
-              sx={{ borderRadius: 3, pl: 6, height: "42px" }}
-            />
-          </Box>
-
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-              flexGrow: 0,
-            }}
-          >
-            <Box sx={{ px: 2 }}>
-              <IconButton onClick={handleOpenDrawer} color="inherit">
-                <ShoppingBasketOutlinedIcon fontSize="medium" />
-                <span
-                  style={{
-                    display: "inline-block",
-                    marginLeft: "8px",
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Сагс
-                </span>
-              </IconButton>
-              <MyDrawer open={drawer} handleClose={handleCloseDrawer} />
-            </Box>
-            <Box sx={{ px: 2 }}>
-              <IconButton onClick={() => {}} color="inherit" href="/login">
-                <PersonOutlineOutlinedIcon fontSize="medium" />
-                <span
-                  style={{
-                    display: "inline-block",
-                    marginLeft: "8px",
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Нэвтрэх
-                </span>
-              </IconButton>
-            </Box>
-
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             {user && (
               <Tooltip title="Профайл">
                 <IconButton onClick={handleOpenUserMenu}>
-                  <Avatar alt="User" src="" />
+                  <Avatar
+                    alt="User"
+                    src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=2531&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  />
                 </IconButton>
               </Tooltip>
             )}
@@ -211,8 +160,69 @@ export const Header = () => {
               ))}
             </Menu>
           </Box>
+
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex", flexGrow: 1 },
+              alignItems: "center",
+              position: "relative",
+              justifyContent: "flex-end",
+              gap: "30px",
+            }}
+          >
+            <SearchOutlinedIcon
+              fontSize="medium"
+              sx={{ position: "absolute", left: "90px" }}
+            />
+            <OutlinedInput
+              placeholder="Search"
+              sx={{ borderRadius: 3, pl: 6, height: "42px" }}
+            />
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexGrow: 0,
+                gap: "20px",
+              }}
+            >
+              <Box
+                sx={{
+                  px: 2,
+                }}
+              >
+                <ColorLink onClick={handleOpenDrawer}>
+                  <ShoppingBasketOutlinedIcon fontSize="medium" />
+                  <span
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "8px",
+                    }}
+                  >
+                    САГС
+                  </span>
+                </ColorLink>
+                <MyDrawer open={drawer} handleClose={handleCloseDrawer} />
+              </Box>
+
+              <Box sx={{ px: 2 }}>
+                <ColorLink href="/login">
+                  <PersonOutlineOutlinedIcon fontSize="medium" />
+                  <span
+                    style={{
+                      display: "inline-block flex",
+                      marginLeft: "6px",
+                    }}
+                  >
+                    НЭВТРЭХ
+                  </span>
+                </ColorLink>
+              </Box>
+            </Box>
+          </Box>
         </Toolbar>
-      </Container>
+      </Box>
     </Container>
   );
 };

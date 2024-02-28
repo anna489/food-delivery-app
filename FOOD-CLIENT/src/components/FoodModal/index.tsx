@@ -8,6 +8,7 @@ import Modal from "@mui/material/Modal";
 import { Container, Grid, Stack, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { BasketContext } from "@/context/basketProvider";
+import { ColorButton } from "@/theme/theme";
 
 interface IFoodModal {
   open: any;
@@ -95,7 +96,7 @@ export default function FoodModal({ open, handleClose, food }: IFoodModal) {
                   justifyContent: "space-around",
                 }}
               >
-                <Button
+                <ColorButton
                   sx={{
                     color: "white",
                     bgcolor: "#18BA51",
@@ -104,11 +105,11 @@ export default function FoodModal({ open, handleClose, food }: IFoodModal) {
                   onClick={() => setCount((count) => count - 1)}
                 >
                   -
-                </Button>
+                </ColorButton>
                 <Typography sx={{ fontSize: "18px", fontWeight: 700 }}>
                   {count}
                 </Typography>
-                <Button
+                <ColorButton
                   sx={{
                     color: "white",
                     bgcolor: "#18BA51",
@@ -117,9 +118,9 @@ export default function FoodModal({ open, handleClose, food }: IFoodModal) {
                   onClick={() => setCount((count) => count + 1)}
                 >
                   +
-                </Button>
+                </ColorButton>
               </Box>
-              <Button
+              <ColorButton
                 sx={{
                   color: "white",
                   bgcolor: "#18BA51",
@@ -131,7 +132,7 @@ export default function FoodModal({ open, handleClose, food }: IFoodModal) {
                 onClick={() => HandleSendFood()}
               >
                 Сагслах
-              </Button>
+              </ColorButton>
             </Stack>
           </Stack>
         </Box>

@@ -63,7 +63,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
         userEmail: email,
         userPassword: password,
       });
-      // console.log("newterlee", token, user);
+      console.log("newterlee", token, user);
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 

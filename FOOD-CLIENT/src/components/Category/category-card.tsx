@@ -42,12 +42,12 @@ const CategoryCard = ({ category }: any) => {
           <AutoAwesomeRoundedIcon sx={{ color: "#18BA51 " }} />
           {category.name}
         </Typography>
-        <Link
-          underline="none"
-          sx={{ alignItems: "center", display: "flex", fontSize: "20px" }}
+        <Button
+          // underline="none"
+          sx={{ alignItems: "center", display: "flex", fontSize: "15px" }}
         >
           Бүгдийг харах <KeyboardArrowRightIcon />
-        </Link>
+        </Button>
       </Box>
       <Grid sx={{ display: "flex", gap: "40px" }}>
         {foods

@@ -1,10 +1,11 @@
+import { BootstrapButton, ColorButton } from "@/theme/theme";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 
 const CategoryButton = ({ category }: any) => {
   return (
     <Box>
-      <Button
+      <BootstrapButton
         sx={{
           color: "white",
           bgcolor: "#18BA51",
@@ -13,7 +14,7 @@ const CategoryButton = ({ category }: any) => {
         }}
       >
         {category.name}
-      </Button>
+      </BootstrapButton>
     </Box>
   );
 };
