@@ -92,7 +92,7 @@ const SignUpPage = () => {
           errorText={formik.errors.email}
         />
         <Input
-          label="Та хаягаа оруулна уу"
+          label="И-мэйл хаягаа дахин оруулна уу"
           name="address"
           value={formik.values.address}
           onChange={formik.handleChange}
