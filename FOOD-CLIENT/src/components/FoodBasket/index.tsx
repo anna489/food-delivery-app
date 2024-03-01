@@ -28,7 +28,7 @@ export const FoodBasket = ({ baskets }: any) => {
   };
 
   return (
-    <>
+    <Box sx={{ width: "600px" }}>
       {baskets.map((basket: any) => (
         <Grid container key={basket._id} p={2} py={6}>
           <Grid
@@ -95,6 +95,6 @@ export const FoodBasket = ({ baskets }: any) => {
           </Grid>
         </Grid>
       ))}
-    </>
+    </Box>
   );
 };
