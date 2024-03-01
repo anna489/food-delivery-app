@@ -13,6 +13,7 @@ import categoryRoute from "./router/categoryRoute";
 import foodRoute from "./router/foodRoute";
 import uploadRoute from "./router/uploadRoute";
 import basket from "./router/basketRoute";
+import orderRoute from "./router/orderRoute";
 
 const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI as string;
@@ -30,6 +31,7 @@ app.use("/category", categoryRoute);
 app.use("/food", foodRoute);
 app.use("/upload", uploadRoute);
 app.use("/basket", basket);
+app.use("/order", orderRoute);
 
 app.use(errorHandler);
 
