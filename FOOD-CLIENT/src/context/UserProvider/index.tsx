@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import MyAxios from "@/utils/axios";
 import Swal from "sweetalert2";
 import { Flag } from "@mui/icons-material";
+import axios from "axios";
 
 interface IUser {
   name: string;
@@ -31,6 +32,7 @@ interface IUserContext {
   logout: () => void;
   loading: boolean;
   token: string | null;
+  createOrder: (basket: any, address: any) => void;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -142,9 +144,38 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  const createOrder = async (basket: any, address: any) => {
+    console.log("food", basket);
+
+    try {
+      await axios.post(
+        "http://localhost:8080/order",
+        {
+          address,
+          basket,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      toast.error("Захиалга үүсгэхэд алдаа гарлаа");
+    }
+  };
+
   return (
     <UserContext.Provider
-      value={{ logout, login, signup, userForm, loading, user, token }}
+      value={{
+        logout,
+        login,
+        signup,
+        userForm,
+        loading,
+        user,
+        token,
+        createOrder,
+      }}
     >
       {children}
     </UserContext.Provider>

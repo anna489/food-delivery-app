@@ -47,7 +47,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
       } = await axios.get("http://localhost:8080/basket", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("CLIENT BASKET", basket);
+
       setBaskets(basket.foods);
       console.log("GET BASKET SUCCESS");
     } catch (error: any) {
@@ -59,14 +59,21 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     try {
       setLoading(true);
       if (user) {
+        console.log("user in addbasket", user);
         const {
           data: { basket },
-        } = await axios.put("http://localhost:8080/basket", {
-          userId: user._id,
-          foodId: food._id,
-          count: count,
-        });
-        console.log("BASKET DATA", basket);
+        } = await axios.post(
+          "http://localhost:8080/basket",
+          {
+            foodId: food._id,
+            count: count,
+            totalPrice: food.price * count,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
         setLoading(false);
         setRefresh(!refresh);
       }

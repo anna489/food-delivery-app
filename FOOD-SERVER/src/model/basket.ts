@@ -9,10 +9,7 @@ const schemaBasket = new Schema({
   foods: [
     {
       food: { type: Schema.Types.ObjectId, ref: "Food", required: true },
-      count: {
-        type: Number,
-        required: true,
-      },
+      count: Number,
     },
   ],
   totalPrice: Number,

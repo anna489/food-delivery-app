@@ -1,3 +1,4 @@
+"use client";
 import { BasketContext } from "@/context/basketProvider";
 import { Add, Close, Remove } from "@mui/icons-material";
 import {
@@ -28,7 +29,7 @@ export const FoodBasket = ({ baskets }: any) => {
   };
 
   return (
-    <Box sx={{ width: "600px" }}>
+    <Box sx={{ width: "550px" }}>
       {baskets.map((basket: any) => (
         <Grid container key={basket._id} p={2} py={6}>
           <Grid
@@ -44,7 +45,7 @@ export const FoodBasket = ({ baskets }: any) => {
               width={250}
               height={170}
               style={{ borderRadius: "10px" }}
-              src={basket.food.image}
+              src={basket?.food?.image}
             />
           </Grid>
 
@@ -52,7 +53,7 @@ export const FoodBasket = ({ baskets }: any) => {
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box>
                 <Typography sx={{ fontSize: "28px" }} fontWeight={600}>
-                  {basket.food.name}
+                  {basket?.food?.name}
                 </Typography>
 
                 <Typography
@@ -60,12 +61,12 @@ export const FoodBasket = ({ baskets }: any) => {
                   py={2}
                   sx={{ color: "#18BA51", fontSize: "18px", display: "flex" }}
                 >
-                  {basket.food.price} * {basket.count}
+                  {basket?.food?.price} * {basket?.count}
                 </Typography>
               </Box>
               <MuiButton
                 sx={{ height: "20px", width: "20px", color: "red" }}
-                onClick={() => handleDelete(basket.food._id)}
+                onClick={() => handleDelete(basket._id)}
               >
                 <Close />
               </MuiButton>
@@ -81,7 +82,7 @@ export const FoodBasket = ({ baskets }: any) => {
                 fontWeight: 600,
               }}
             >
-              {basket.food.description}
+              {basket?.food?.description}
             </Typography>
 
             <Typography sx={{ marginTop: "10px", fontWeight: 600 }}>
@@ -89,7 +90,7 @@ export const FoodBasket = ({ baskets }: any) => {
               <span
                 style={{ color: "red", paddingLeft: "10px", fontWeight: 600 }}
               >
-                {basket.food.price * basket.count} ₮
+                {basket?.food?.price * basket.count} ₮
               </span>
             </Typography>
           </Grid>

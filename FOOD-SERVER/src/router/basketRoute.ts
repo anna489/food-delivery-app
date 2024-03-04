@@ -1,20 +1,18 @@
 import { Router } from "express";
-import {
-  createBasket,
-  deleteBasket,
-  getBasket,
-  updateBasket,
-} from "../controller/basketController";
 import { authenticate } from "../middleware/auth";
+import {
+  addToBasketByUserId,
+  deleteFromBasketByUser,
+  getFromBasketByUser,
+} from "../controller/basketController";
 
 const router = Router();
 
 router
   .route("/")
-  .get(authenticate, getBasket)
-  .post(authenticate, createBasket)
-  .put(updateBasket);
+  .post(authenticate, addToBasketByUserId)
+  .get(authenticate, getFromBasketByUser);
 
-router.route("/:foodId").delete(authenticate, deleteBasket);
+router.route("/:foodId").delete(authenticate, deleteFromBasketByUser);
 
 export default router;
