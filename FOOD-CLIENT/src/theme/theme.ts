@@ -1,3 +1,5 @@
+"use client";
+
 import { Link, createTheme } from "@mui/material";
 import { purple } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";

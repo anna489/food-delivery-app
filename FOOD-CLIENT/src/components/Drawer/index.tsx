@@ -42,9 +42,14 @@ const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
             sx={{
               position: "sticky",
               bottom: "0",
+              display: "flex",
+              justifyContent: "space-around",
             }}
           >
-            <ColorButton variant="contained" href="deliveryregion">
+            <Typography>
+              Нийт төлөх дүн: <span></span>
+            </Typography>
+            <ColorButton variant="contained" href="order">
               ЗАХИАЛАХ
             </ColorButton>
           </Box>

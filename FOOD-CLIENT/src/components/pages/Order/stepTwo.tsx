@@ -1,17 +1,21 @@
 import { Box, Card, Checkbox, Grid, Typography } from "@mui/material";
 import React, { useContext } from "react";
-import { FoodBasket } from "../FoodBasket";
+import { FoodBasket } from "@/components/FoodBasket";
 import { ColorButton } from "@/theme/theme";
 import { BasketContext } from "@/context/basketProvider";
 import RadioButtonCheckedOutlinedIcon from "@mui/icons-material/RadioButtonCheckedOutlined";
 
-const StepTwo = () => {
-  const { baskets } = useContext(BasketContext);
+type Props = {
+  formik: any;
+};
+
+export const StepTwo = ({ formik }: Props) => {
+  const { baskets, totalPrice } = useContext(BasketContext);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   return (
     <Grid>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", height: "100px" }}>
         <Checkbox
           {...label}
           icon={<RadioButtonCheckedOutlinedIcon sx={{ fontSize: "50px" }} />}
@@ -27,7 +31,7 @@ const StepTwo = () => {
           <Typography>Хүлээгдэж байна</Typography>
         </Box>
       </Box>
-      <Card sx={{ padding: "30px", height: "550px", marginTop: 5 }}>
+      <Card sx={{ padding: "30px", boxShadow: 3, height: "720px" }}>
         <FoodBasket baskets={baskets} />
 
         <Box
@@ -35,6 +39,7 @@ const StepTwo = () => {
             display: "flex",
             justifyContent: "space-around",
             position: "sticky",
+            alignItems: "center",
             padding: "20px",
           }}
         >
@@ -42,13 +47,13 @@ const StepTwo = () => {
             Нийт мөнгөн дүн:
             <span
               style={{ color: "red", paddingLeft: "10px", fontWeight: 600 }}
-            ></span>
+            >
+              {totalPrice}₮
+            </span>
           </Typography>
-          <ColorButton sx={{}}>ЗАХИАЛАХ</ColorButton>
+          <ColorButton onClick={formik.handleSubmit}>ЗАХИАЛАХ</ColorButton>
         </Box>
       </Card>
     </Grid>
   );
 };
-
-export default StepTwo;

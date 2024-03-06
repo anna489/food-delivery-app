@@ -1,4 +1,5 @@
 "use client";
+
 import React, {
   ChangeEvent,
   PropsWithChildren,
@@ -19,6 +20,7 @@ interface IBasket {
     price: number;
     id: string;
   };
+  totalPrice: number;
   count: number;
 }
 
@@ -27,6 +29,7 @@ interface IBasketContext {
   baskets: IBasket[];
   addBasket: (food: any, count: number) => Promise<void>;
   deleteBasket: (food: any) => Promise<void>;
+  totalPrice: number;
 }
 
 export const BasketContext = createContext({} as IBasketContext);
@@ -37,6 +40,22 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   const [baskets, setBaskets] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [drawerFood, setDrawerFood] = useState<any>([]);
+  const [basketFoods, setBasketFoods] = useState([]);
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    if (basketFoods) {
+      setTotalPrice(
+        basketFoods
+          ?.map((food: any) => {
+            return food.food.price * food.count;
+          })
+          .reduce((sum: number, cur: number) => {
+            return sum + cur;
+          }, 0)
+      );
+    }
+  }, [basketFoods]);
 
   const getBaskets = async () => {
     try {
@@ -116,7 +135,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <BasketContext.Provider
-      value={{ loading, baskets, addBasket, deleteBasket }}
+      value={{ loading, baskets, addBasket, deleteBasket, totalPrice }}
     >
       {children}
     </BasketContext.Provider>
