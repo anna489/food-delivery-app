@@ -6,11 +6,13 @@ import { StepTwo } from "./stepTwo";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { orderContext } from "@/context/orderProvider";
+import { BasketContext } from "@/context/basketProvider";
 
 type Props = {};
 
 const OrderPageComponent = (props: Props) => {
   const { createOrder } = useContext(orderContext);
+
   const validationSchema = yup.object({
     duureg: yup.string().required("Дүүрэгээ заавал оруулах ёстой."),
     horoo: yup.string().required("Хороогоо заавал оруулах ёстой."),
@@ -23,7 +25,7 @@ const OrderPageComponent = (props: Props) => {
   });
   const formik = useFormik({
     onSubmit: ({ duureg, horoo, buildingNo, info, phoneNumber, method }) => {
-      console.log("ON SUBMIT WORKING");
+      console.log("WORKING========>", formik);
       createOrder(duureg, horoo, buildingNo, info, phoneNumber, method);
     },
     initialValues: {

@@ -75,6 +75,7 @@ export const StepOne = ({ formik }: any) => {
               onChange={formik.handleChange}
               name="duureg"
               sx={{ bgcolor: "#ECEDF0" }}
+              placeholder="Дүүрэг сонгоно уу"
             >
               <MenuItem disabled value="">
                 <em>Дүүрэг сонгоно уу</em>
@@ -93,7 +94,7 @@ export const StepOne = ({ formik }: any) => {
             <Select
               value={formik.values.khoroo}
               onChange={formik.handleChange}
-              name="khoroo"
+              name="horoo"
               sx={{ bgcolor: "#ECEDF0" }}
             >
               <MenuItem disabled value="">
@@ -141,7 +142,7 @@ export const StepOne = ({ formik }: any) => {
         <Input
           value={formik.values.phone}
           onChange={formik.handleChange}
-          name="phone"
+          name="phoneNumber"
           errorText={formik.errors.phone}
           label="Утасны дугаар*"
         />

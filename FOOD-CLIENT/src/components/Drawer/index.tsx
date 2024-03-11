@@ -14,8 +14,8 @@ interface IDrawerProps {
 
 const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
   const { getFoods, foods } = useContext(foodContext);
-  const { baskets } = useContext(BasketContext);
-
+  const { baskets, totalPrice } = useContext(BasketContext);
+  console.log("BASKET FOOOD=======>");
   useEffect(() => {
     getFoods();
   }, []);
@@ -47,7 +47,12 @@ const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
             }}
           >
             <Typography>
-              Нийт төлөх дүн: <span></span>
+              Нийт төлөх дүн:{" "}
+              <span
+                style={{ color: "red", paddingLeft: "10px", fontWeight: 600 }}
+              >
+                {totalPrice} ₮
+              </span>
             </Typography>
             <ColorButton variant="contained" href="order">
               ЗАХИАЛАХ

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, useContext } from "react";
 import {
   AppBar,
   Box,
@@ -23,6 +23,8 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Link from "next/link";
 import MyDrawer from "../Drawer";
 import { ColorLink } from "@/theme/theme";
+import { UserContext } from "@/context/UserProvider";
+import { useRouter } from "next/navigation";
 
 const pages = [
   {
@@ -41,10 +43,12 @@ const pages = [
 const settings = ["Профайл", "Тохиргоо", , "Гарах"];
 
 export const Header = () => {
-  const user = null;
+  const { user } = useContext(UserContext);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [drawer, setDrawer] = useState(false);
+
+  const router = useRouter();
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -206,18 +210,42 @@ export const Header = () => {
                 <MyDrawer open={drawer} handleClose={handleCloseDrawer} />
               </Box>
 
-              <Box sx={{ px: 2 }}>
-                <ColorLink href="/login">
-                  <PersonOutlineOutlinedIcon fontSize="medium" />
-                  <span
-                    style={{
-                      display: "inline-block flex",
-                      marginLeft: "6px",
+              <Box sx={{ px: 2, width: "120px" }}>
+                {user ? (
+                  <ColorLink
+                    onClick={() => {
+                      router.push("/userlogin");
                     }}
                   >
-                    НЭВТРЭХ
-                  </span>
-                </ColorLink>
+                    <PersonOutlineOutlinedIcon fontSize="medium" />
+                    <span
+                      style={{
+                        display: "inline-block flex",
+                        marginLeft: "6px",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {user.name}
+                    </span>
+                  </ColorLink>
+                ) : (
+                  <ColorLink
+                    onClick={() => {
+                      router.push("/login");
+                    }}
+                  >
+                    <PersonOutlineOutlinedIcon fontSize="medium" />
+                    <span
+                      style={{
+                        display: "inline-block flex",
+                        marginLeft: "6px",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      нэвтрэх
+                    </span>
+                  </ColorLink>
+                )}
               </Box>
             </Box>
           </Box>

@@ -8,30 +8,30 @@ import {
   Box,
   Stack,
   Button,
+  List,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 
 type Props = {
   image: string;
-  _id: String;
+  _id: string;
   name: string;
   description: string;
   price: number;
   count: number;
 };
 
-export const FoodBasket = ({ baskets }: any) => {
+export const FoodBasket = ({ baskets, food }: any) => {
   const { deleteBasket } = useContext(BasketContext);
   const [count, setCount] = useState();
-
-  const handleDelete = (id: any) => {
-    deleteBasket(id);
+  const handleDelete = () => {
+    deleteBasket(baskets?.food?._id);
   };
 
   return (
-    <Box sx={{ width: "550px" }}>
+    <Box sx={{}}>
       {baskets.map((basket: any) => (
-        <Grid container key={basket._id} p={2} py={6}>
+        <Grid container key={basket._id} p={2} py={6} sx={{ width: "550px" }}>
           <Grid
             item
             xs={6}
@@ -66,7 +66,7 @@ export const FoodBasket = ({ baskets }: any) => {
               </Box>
               <MuiButton
                 sx={{ height: "20px", width: "20px", color: "red" }}
-                onClick={() => handleDelete(basket._id)}
+                onClick={handleDelete}
               >
                 <Close />
               </MuiButton>
@@ -86,7 +86,7 @@ export const FoodBasket = ({ baskets }: any) => {
             </Typography>
 
             <Typography sx={{ marginTop: "10px", fontWeight: 600 }}>
-              Нийт мөнгөн дүн:
+              Мөнгөн дүн:
               <span
                 style={{ color: "red", paddingLeft: "10px", fontWeight: 600 }}
               >

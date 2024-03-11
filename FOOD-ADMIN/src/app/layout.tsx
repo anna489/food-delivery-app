@@ -3,7 +3,7 @@ import "./globals.css";
 import AuthProvider from "@/context/authProvider";
 import CatProvider from "@/context/catProvider";
 import FoodProvider from "@/context/foodProvider";
-
+import UserProvider from "@/context/userProvider";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -13,11 +13,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthProvider>
-          <CatProvider>
-            <FoodProvider>
-              <ThemeProvider>{children}</ThemeProvider>
-            </FoodProvider>
-          </CatProvider>
+          <UserProvider>
+            <CatProvider>
+              <FoodProvider>
+                <ThemeProvider>{children}</ThemeProvider>
+              </FoodProvider>
+            </CatProvider>
+          </UserProvider>
         </AuthProvider>
       </body>
     </html>

@@ -32,7 +32,6 @@ interface IUserContext {
   logout: () => void;
   loading: boolean;
   token: string | null;
-  createOrder: (basket: any, address: any) => void;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -68,7 +67,8 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       console.log("newterlee", token, user);
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-
+      setUser(user);
+      setToken(token);
       await Swal.fire({
         position: "top-end",
         icon: "success",
@@ -128,7 +128,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       });
 
       await Swal.fire({
-        position: "top-end",
+        position: "top-right",
         title: "Та амжилттай бүртгүүллээ",
         text: "E-mail хаягруу баталгаажуулах линк явууллаа",
         icon: "success",
@@ -144,26 +144,6 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const createOrder = async (basket: any, address: any) => {
-    console.log("food", basket);
-
-    try {
-      await axios.post(
-        "http://localhost:8080/order",
-        {
-          address,
-          basket,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-      toast.error("Захиалга үүсгэхэд алдаа гарлаа");
-    }
-  };
-
   return (
     <UserContext.Provider
       value={{
@@ -174,7 +154,6 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
         loading,
         user,
         token,
-        createOrder,
       }}
     >
       {children}

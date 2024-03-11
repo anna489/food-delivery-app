@@ -75,7 +75,7 @@ const FoodCard = ({ food }: any) => {
     </Typography>
   );
   return (
-    <Grid xs={12} sm={6} md={3}>
+    <Grid sx={{ display: "flex", justifyContent: "center" }}>
       <Card
         sx={{
           width: "350px",

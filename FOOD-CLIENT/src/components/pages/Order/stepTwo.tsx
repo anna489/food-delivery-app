@@ -4,7 +4,7 @@ import { FoodBasket } from "@/components/FoodBasket";
 import { ColorButton } from "@/theme/theme";
 import { BasketContext } from "@/context/basketProvider";
 import RadioButtonCheckedOutlinedIcon from "@mui/icons-material/RadioButtonCheckedOutlined";
-
+import { useRouter } from "next/navigation";
 type Props = {
   formik: any;
 };
@@ -12,7 +12,7 @@ type Props = {
 export const StepTwo = ({ formik }: Props) => {
   const { baskets, totalPrice } = useContext(BasketContext);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
+  const router = useRouter();
   return (
     <Grid>
       <Box sx={{ display: "flex", height: "100px" }}>
@@ -31,7 +31,15 @@ export const StepTwo = ({ formik }: Props) => {
           <Typography>Хүлээгдэж байна</Typography>
         </Box>
       </Box>
-      <Card sx={{ padding: "30px", boxShadow: 3, height: "720px" }}>
+
+      <Card
+        sx={{
+          padding: "30px",
+          boxShadow: 3,
+          height: "720px",
+          overflow: "auto",
+        }}
+      >
         <FoodBasket baskets={baskets} />
 
         <Box

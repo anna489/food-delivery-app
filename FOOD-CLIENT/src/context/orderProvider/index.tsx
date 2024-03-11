@@ -7,8 +7,11 @@ import {
   useContext,
   useState,
 } from "react";
-import { authContext } from "../authProvider";
+// import { authContext } from "../authProvider";
 import { BasketContext } from "../basketProvider";
+import { UserContext } from "../UserProvider";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 interface ICreateOrderContext {
   createOrder: (
@@ -24,7 +27,8 @@ export const orderContext = createContext({} as ICreateOrderContext);
 
 const OrderProvider = ({ children }: PropsWithChildren) => {
   const { baskets, totalPrice } = useContext(BasketContext);
-  let orderInfo = {
+  const [loading, setLoading] = useState(false);
+  const orderInfo = {
     orderId: "#" + Math.floor(Math.random() * 10000),
     foods: baskets,
     payment: {
@@ -40,7 +44,8 @@ const OrderProvider = ({ children }: PropsWithChildren) => {
     phoneNumber: "",
   };
 
-  const { token, user } = useContext(authContext);
+  const { token, user } = useContext(UserContext);
+  console.log("USER======>", user);
   const createOrder = async (
     duureg: string,
     horoo: string,
@@ -49,27 +54,41 @@ const OrderProvider = ({ children }: PropsWithChildren) => {
     phoneNumber: string,
     method: string
   ) => {
-    orderInfo.address.duureg = duureg;
-    orderInfo.address.khoroo = horoo;
-    orderInfo.address.buildingNo = buildingNo;
-    orderInfo.address.info = info;
-    orderInfo.payment.method = method;
-    orderInfo.phoneNumber = phoneNumber;
-    console.log("CREATE ORDER", orderInfo);
-    console.log("TOKEN", token);
-    const data = await axios.post(
-      "http://localhost:8080/order/new",
-      {
-        userId: user._id,
-        orderInfo: orderInfo,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    try {
+      setLoading(true);
+      orderInfo.address.duureg = duureg;
+      orderInfo.address.khoroo = horoo;
+      orderInfo.address.buildingNo = buildingNo;
+      orderInfo.address.info = info;
+      orderInfo.payment.method = method;
+      orderInfo.phoneNumber = phoneNumber;
+
+      const data = await axios.post(
+        "http://localhost:8080/order/new",
+        {
+          userId: user._id,
+          orderInfo: orderInfo,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      await Swal.fire({
+        position: "top-right",
+        title: "Та амжилттай захиалга хийлээ",
+        icon: "success",
+        timer: 5000,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      toast.error(" Захиалга хийхэд тань алдаа гарлаа");
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <orderContext.Provider value={{ createOrder }}>
       {children}

@@ -19,7 +19,7 @@ import Scrollbar from "@/components/scrollbar";
 import TableNoData from "./table-no-data";
 import UserTableRow from "./user-table-row";
 import UserTableHead from "./user-table-head";
-import TableEmptyRows from "./table-empty-rows";
+import TableEmptyRows from "./table-empty-row";
 import UserTableToolbar from "./user-table-toolbar";
 import { emptyRows, applyFilter, getComparator } from "./functions";
 import { userContext } from "@/context/userProvider";
@@ -28,7 +28,7 @@ import { redirect } from "next/navigation";
 
 // ----------------------------------------------------------------------
 
-export default function UserView() {
+export default function OrderView() {
   const { checkIsLogged } = useContext(authContext);
   useEffect(() => {
     checkIsLogged();
@@ -37,7 +37,8 @@ export default function UserView() {
       redirect("/login");
     }
   }, []);
-  const { getCustomers, customers } = useContext(userContext);
+  const { getCustomers, customers, orders } = useContext(userContext);
+
   useEffect(() => {
     getCustomers();
   }, []);
@@ -104,13 +105,13 @@ export default function UserView() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: customers,
+    inputData: orders,
     comparator: getComparator(order, orderBy),
     filterName,
   });
 
   const notFound = !dataFiltered.length && !!filterName;
-
+  console.log("ORDERS", orders);
   return (
     <Container>
       <Stack
@@ -119,7 +120,7 @@ export default function UserView() {
         justifyContent="space-between"
         mb={5}
       >
-        <Typography variant="h4">Хэрэглэгчид</Typography>
+        <Typography variant="h4">Захиалгууд</Typography>
       </Stack>
 
       <Card sx={{}}>
@@ -135,41 +136,31 @@ export default function UserView() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={customers.length}
+                rowCount={orders.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: "name", label: "Нэр" },
-                  { id: "company", label: "Имэйл" },
-                  { id: "role", label: "Эрх" },
+                  { id: "order", label: "Order Food Photo" },
+                  { id: "info", label: "Buyer Info" },
+                  { id: "payment", label: "Payment" },
+                  { id: "address", label: "Address" },
+                  { id: "state", label: "Delivery state" },
+                  { id: "action", label: "Үйлдэл" },
                 ]}
               />
               <TableBody>
-                {/* {customers ? (
-                  customers?.map((customer: any) => {
-                    return (
-                      <UserTableRow
-                        key={customer._id}
-                        name={customer.name}
-                        role={customer.role}
-                        company={customer.email}
-                      />
-                    );
-                  })
-                ) : (
-                  <div></div>
-                )} */}
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row: any) => (
                     <UserTableRow
                       key={row.id}
-                      name={row.name}
-                      role={row.role}
-                      status={row.status}
-                      email={row.email}
-                      avatarUrl={row.avatarUrl}
+                      orderNo={row.orderNo}
+                      payment={row.payment}
+                      address={row.address}
+                      phoneNumber={row.phoneNumber}
+                      user={row.user}
+                      delivery={row.delivery}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event: any) => handleClick(event, row.name)}
                     />

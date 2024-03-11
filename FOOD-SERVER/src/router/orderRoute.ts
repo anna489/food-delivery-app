@@ -1,11 +1,8 @@
 import { Router } from "express";
-import { createOrder, updateOrder } from "../controller/orderController";
-import { authenticate } from "../middleware/auth";
+import { authenticate, authorize } from "../middleware/auth";
+import { createOrder } from "../controller/orderController";
 
 const router = Router();
-
-router.route("/").post(authenticate, createOrder);
-
-router.route("/:orderId").put(authenticate, updateOrder);
+router.route("/new").post(authenticate, createOrder);
 
 export default router;
