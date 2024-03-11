@@ -70,7 +70,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       setUser(user);
       setToken(token);
       await Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "success",
         title: "Амжилттай нэвтэрлээ",
         showConfirmButton: false,
@@ -128,7 +128,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       });
 
       await Swal.fire({
-        position: "top-right",
+        position: "center",
         title: "Та амжилттай бүртгүүллээ",
         text: "E-mail хаягруу баталгаажуулах линк явууллаа",
         icon: "success",

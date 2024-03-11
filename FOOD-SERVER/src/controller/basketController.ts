@@ -106,8 +106,6 @@ export const deleteFromBasketByUser = async (
   const { foodId } = req.params;
   const { user } = req;
 
-  console.log("User", user);
-  console.log("FoodId", foodId);
   try {
     const findBasket = await Basket.findOne({ user: user._id }).populate(
       "foods.food"
@@ -115,14 +113,16 @@ export const deleteFromBasketByUser = async (
     if (!findBasket) {
       throw new MyError("Сагсны мэдээлэл олдсонгүй", 400);
     }
+
     const findIndex = findBasket.foods.findIndex(
-      (el) => el.food.toString() === foodId
+      (el) => el.food._id.toString() == foodId
     );
-    console.log("Find IDX: ", findIndex);
+
     if (findIndex !== -1) {
       findBasket.foods.splice(findIndex, 1);
     }
     const savedBasket = await (await findBasket.save()).populate("foods.food");
+    console.log("SAVED", savedBasket);
     res.status(200).json({
       message: "Хоолыг сагснаас хаслаа.",
       basket: {

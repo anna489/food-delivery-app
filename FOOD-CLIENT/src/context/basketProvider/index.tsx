@@ -93,41 +93,40 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
-  // const deleteBasket = async (id: any) => {
-  //   try {
-  //     setLoading(true);
-
-  //     if (user) {
-  //       const {
-  //         data: { basket },
-  //       } = await axios.delete(`http://localhost:8080/basket/${id}`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-
-  //       setLoading(false);
-  //       deleteFoodFromArray(id);
-  //       setRefresh(!refresh);
-  //     }
-  //   } catch (error: any) {
-  //     alert("Error" + error.message);
-  //   }
-  // };
-
-  const deleteBasket = async (food_id: string) => {
+  const deleteBasket = async (id: any) => {
     try {
-      const data = await axios.delete("http://localhost:8080/basket", {
-        data: {
-          userId: user._id,
-          foodId: food_id,
+      setLoading(true);
+
+      const {
+        data: { basket },
+      } = await axios.delete(`http://localhost:8080/basket/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
-      deleteFoodFromArray(food_id);
-    } catch (error) {
-      console.log("ERROR IN FOOD BASKET", error);
+
+      setLoading(false);
+      deleteFoodFromArray(id);
+      setRefresh(!refresh);
+    } catch (error: any) {
+      alert("Error" + error.message);
     }
   };
+
+  // const deleteBasket = async (food_id: string) => {
+  //   console.log("food_id", food_id);
+  //   try {
+  //     const data = await axios.delete("http://localhost:8080/basket", {
+  //       data: {
+  //         userId: user._id,
+  //         foodId: food_id,
+  //       },
+  //     });
+  //     deleteFoodFromArray(food_id);
+  //   } catch (error) {
+  //     console.log("ERROR IN FOOD BASKET", error);
+  //   }
+  // };
 
   useEffect(() => {
     getBaskets();

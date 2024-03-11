@@ -44,6 +44,9 @@ const MyDrawer = ({ handleClose, open }: IDrawerProps) => {
               bottom: "0",
               display: "flex",
               justifyContent: "space-around",
+              bgcolor: "white",
+              padding: "20px",
+              boxShadow: "inherit",
             }}
           >
             <Typography>

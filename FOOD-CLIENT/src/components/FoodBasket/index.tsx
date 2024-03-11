@@ -24,8 +24,9 @@ type Props = {
 export const FoodBasket = ({ baskets, food }: any) => {
   const { deleteBasket } = useContext(BasketContext);
   const [count, setCount] = useState();
-  const handleDelete = () => {
-    deleteBasket(baskets?.food?._id);
+  const handleDelete = (id: any) => {
+    console.log("food1", id);
+    deleteBasket(id);
   };
 
   return (
@@ -66,7 +67,7 @@ export const FoodBasket = ({ baskets, food }: any) => {
               </Box>
               <MuiButton
                 sx={{ height: "20px", width: "20px", color: "red" }}
-                onClick={handleDelete}
+                onClick={() => handleDelete(basket.food._id)}
               >
                 <Close />
               </MuiButton>

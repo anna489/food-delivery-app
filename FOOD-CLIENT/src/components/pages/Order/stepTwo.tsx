@@ -34,7 +34,6 @@ export const StepTwo = ({ formik }: Props) => {
 
       <Card
         sx={{
-          padding: "30px",
           boxShadow: 3,
           height: "720px",
           overflow: "auto",
@@ -49,6 +48,8 @@ export const StepTwo = ({ formik }: Props) => {
             position: "sticky",
             alignItems: "center",
             padding: "20px",
+            bottom: 0,
+            bgcolor: "white",
           }}
         >
           <Typography sx={{ fontWeight: 600 }}>

@@ -10,7 +10,6 @@ export const authenticate = async (
   next: NextFunction
 ) => {
   try {
-    console.log("REQHE", req.headers);
     if (!req.headers.authorization) {
       throw new MyError("Token байхгүй байна.Заавал token илгээх ёстой", 400);
     }
@@ -23,7 +22,7 @@ export const authenticate = async (
     const { id } = jwt.verify(token!, process.env.JWT_PRIVATE_KEY!) as {
       id: string;
     };
-    console.log("ID :", id);
+
     const findUser = await User.findById(id);
     req.user = findUser;
     next();
