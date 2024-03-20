@@ -33,6 +33,9 @@ app.use("/upload", uploadRoute);
 app.use("/basket", basket);
 app.use("/order", orderRoute);
 
+app.get("/", (req: Request, res: Response) => {
+  res.send("<h1>FOod delivery</h1>");
+});
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(color.rainbow("Server is running " + PORT)));
